@@ -7,23 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C31149A2A7A374C00D94CA1 /* SettingViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3114992A7A374C00D94CA1 /* SettingViewProtocol.swift */; };
+		2C31149C2A7A380900D94CA1 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31149B2A7A380900D94CA1 /* StartViewController.swift */; };
 		2CC1940F2A73E78700E30D8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC1940E2A73E78700E30D8D /* AppDelegate.swift */; };
 		2CC194112A73E78700E30D8D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC194102A73E78700E30D8D /* SceneDelegate.swift */; };
-		2CC194132A73E78700E30D8D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC194122A73E78700E30D8D /* ViewController.swift */; };
-		2CC194162A73E78700E30D8D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CC194142A73E78700E30D8D /* Main.storyboard */; };
+		2CC194132A73E78700E30D8D /* SpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC194122A73E78700E30D8D /* SpaceViewController.swift */; };
 		2CC194182A73E78800E30D8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CC194172A73E78800E30D8D /* Assets.xcassets */; };
 		2CC1941B2A73E78800E30D8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CC194192A73E78800E30D8D /* LaunchScreen.storyboard */; };
+		2CC194232A73F21F00E30D8D /* Starship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC194222A73F21E00E30D8D /* Starship.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C3114992A7A374C00D94CA1 /* SettingViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewProtocol.swift; sourceTree = "<group>"; };
+		2C31149B2A7A380900D94CA1 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		2CC1940B2A73E78700E30D8D /* StarWars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarWars.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC1940E2A73E78700E30D8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CC194102A73E78700E30D8D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2CC194122A73E78700E30D8D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2CC194152A73E78700E30D8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2CC194122A73E78700E30D8D /* SpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceViewController.swift; sourceTree = "<group>"; };
 		2CC194172A73E78800E30D8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CC1941A2A73E78800E30D8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2CC1941C2A73E78800E30D8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2CC194222A73F21E00E30D8D /* Starship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starship.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +62,10 @@
 			children = (
 				2CC1940E2A73E78700E30D8D /* AppDelegate.swift */,
 				2CC194102A73E78700E30D8D /* SceneDelegate.swift */,
-				2CC194122A73E78700E30D8D /* ViewController.swift */,
-				2CC194142A73E78700E30D8D /* Main.storyboard */,
+				2C31149B2A7A380900D94CA1 /* StartViewController.swift */,
+				2CC194122A73E78700E30D8D /* SpaceViewController.swift */,
+				2C3114992A7A374C00D94CA1 /* SettingViewProtocol.swift */,
+				2CC194222A73F21E00E30D8D /* Starship.swift */,
 				2CC194172A73E78800E30D8D /* Assets.xcassets */,
 				2CC194192A73E78800E30D8D /* LaunchScreen.storyboard */,
 				2CC1941C2A73E78800E30D8D /* Info.plist */,
@@ -127,7 +133,6 @@
 			files = (
 				2CC1941B2A73E78800E30D8D /* LaunchScreen.storyboard in Resources */,
 				2CC194182A73E78800E30D8D /* Assets.xcassets in Resources */,
-				2CC194162A73E78700E30D8D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +143,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CC194132A73E78700E30D8D /* ViewController.swift in Sources */,
+				2CC194132A73E78700E30D8D /* SpaceViewController.swift in Sources */,
 				2CC1940F2A73E78700E30D8D /* AppDelegate.swift in Sources */,
+				2C31149A2A7A374C00D94CA1 /* SettingViewProtocol.swift in Sources */,
 				2CC194112A73E78700E30D8D /* SceneDelegate.swift in Sources */,
+				2CC194232A73F21F00E30D8D /* Starship.swift in Sources */,
+				2C31149C2A7A380900D94CA1 /* StartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		2CC194142A73E78700E30D8D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2CC194152A73E78700E30D8D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		2CC194192A73E78800E30D8D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -292,9 +292,7 @@
 				INFOPLIST_FILE = StarWars/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,6 +300,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.ivanov.StarWars;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -320,9 +321,7 @@
 				INFOPLIST_FILE = StarWars/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -330,6 +329,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.ivanov.StarWars;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
