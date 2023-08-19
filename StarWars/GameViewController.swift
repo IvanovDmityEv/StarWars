@@ -7,14 +7,15 @@
 
 import UIKit
 
-class SpaceViewController: UIViewController {
+class GameViewController: UIViewController {
     
 //MARK: - vars/lets
     var spaseImage = CALayer()
     let leftClickButton = UIButton(type: .system)
     let rightClickButton = UIButton(type: .system)
+    let fireButton = UIButton(type: .system)
     let imageRebelStarship = UIImageView()
-//    let imageEmpireStarship = UIImageView()
+    let imageEmpireStarship = UIImageView()
     let closeViewButton = UIButton(type: .system)
 
 //MARK: - lifecycle func
@@ -34,7 +35,7 @@ class SpaceViewController: UIViewController {
     
    private func settingSpaceView() {
         settingBackgroundView()
-        settingButtons(for: [leftClickButton, rightClickButton, closeViewButton])
+        settingButtons(for: [leftClickButton, rightClickButton, closeViewButton, fireButton])
         settingGameScore()
         addStarships()
     }
@@ -46,11 +47,11 @@ class SpaceViewController: UIViewController {
         gameScore.font = UIFont(name: .fontName, size: CGFloat(integerLiteral: .sizeFont))
 
         gameScore.textColor = .white
-        gameScore.alpha = 0.5
+        gameScore.alpha = CGFloat(.alpha)
         gameScore.textAlignment = .center
         
         gameScore.frame =  CGRect(x: Int(view.frame.maxX)/2 - .widthGameScore/2,
-                                  y: Int(view.frame.maxY) - .heightGameScore - .buttomConstraint,
+                                  y: Int(view.frame.maxY) - .heightGameScore - .universalConstraint,
                                   width: .widthGameScore,
                                   height: .heightGameScore)
         view.addSubview(gameScore)
@@ -60,8 +61,10 @@ class SpaceViewController: UIViewController {
         guard let imageRebelStarship = self.createStarship(name: .rebelStarship) else { return }
         let layerRebelStarship = imageRebelStarship.layer
         view.layer.insertSublayer(layerRebelStarship, at: 1)
+        
+//        fire(imageStarship: imageRebelStarship)
 
-        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] timer in
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
             guard let self = self else {
                 timer.invalidate()
                 return
@@ -71,46 +74,6 @@ class SpaceViewController: UIViewController {
             self.view.layer.insertSublayer(layerEmpireStarship, at: 2)
             self.moveEmpireStarship(imageEmpireStarship)
         }
-    }
-    
-    private func moveEmpireStarship(_ imageEmpireStarship: UIImageView) {
-        
-        UIView.animate(withDuration: 3, delay: 0, options: .curveLinear) {
-            imageEmpireStarship.frame.origin.y += self.imageRebelStarship.frame.origin.y + self.imageRebelStarship.frame.height
-            
-        } completion: {_ in
-
-            if self.checkCollisionFrame(empireStarshipFrame: imageEmpireStarship.frame, rebelStarshipFrame: self.imageRebelStarship.frame) {
-                self.imageRebelStarship.removeFromSuperview()
-                self.showAlert()
-            }
-        imageEmpireStarship.removeFromSuperview()
-        }
-    }
-    
-    private func checkCollisionFrame(empireStarshipFrame: CGRect, rebelStarshipFrame: CGRect) -> Bool {
-        return empireStarshipFrame.intersects(rebelStarshipFrame)
-    }
-    
-    private func showAlert() {
-        let alertController = UIAlertController(title: .titleAlert,
-                                                message: .messageAlert,
-                                                preferredStyle: .alert)
-        
-        alertController.view.tintColor = .black
-        
-        let actionRestart = UIAlertAction(title: .buttonAlertRestart,
-                                          style: .default) { [weak self] _ in
-            self?.addStarships()
-        }
-        let actionGoMenu = UIAlertAction(title: .buttonAlertGoToMenu,
-                                         style: .default) { [weak self] _ in
-            self?.dismiss(animated: true)
-        }
-        
-        alertController.addAction(actionRestart)
-        alertController.addAction(actionGoMenu)
-        self.present(alertController, animated: true, completion: nil)
     }
 
     private func createStarship(name: String) -> UIImageView? {
@@ -146,7 +109,7 @@ class SpaceViewController: UIViewController {
             
         case .rebelStarship:
             let rebelStarship = Starship(positionX: Int(view.frame.maxX/2) - widthStarship/2,
-                                 positionY: Int(view.frame.maxY) - widthStarship * 2 - .buttomConstraint,
+                                 positionY: Int(view.frame.maxY) - widthStarship * 2 - .universalConstraint,
                                  width: Int(view.frame.width) / .countCell,
                                  height: Int(view.frame.width) / .countCell,
                                  nameStarship: .imageXWing)
@@ -162,6 +125,46 @@ class SpaceViewController: UIViewController {
                 print("ups: AddStarship")
         }
         return nil
+    }
+    
+    private func moveEmpireStarship(_ imageEmpireStarship: UIImageView) {
+        
+        UIView.animate(withDuration: 3, delay: 0, options: .curveLinear) {
+            imageEmpireStarship.frame.origin.y += self.imageRebelStarship.frame.origin.y + self.imageRebelStarship.frame.height
+            
+        } completion: {_ in
+
+            if self.checkCollisionFrame(empireStarshipFrame: imageEmpireStarship.frame, objectFrame: self.imageRebelStarship.frame) {
+                self.imageRebelStarship.removeFromSuperview()
+                self.showAlert()
+            }
+
+        imageEmpireStarship.removeFromSuperview()
+        }
+    }
+    
+    private func checkCollisionFrame(empireStarshipFrame: CGRect, objectFrame: CGRect) -> Bool {
+        return empireStarshipFrame.intersects(objectFrame)
+    }
+    
+    private func showAlert() {
+        let alertController = UIAlertController(title: .titleAlert,
+                                                message: .messageAlert,
+                                                preferredStyle: .alert)
+        alertController.view.tintColor = .black
+        
+        let actionRestart = UIAlertAction(title: .buttonAlertRestart,
+                                          style: .default) { [weak self] _ in
+            self?.addStarships()
+        }
+        let actionGoMenu = UIAlertAction(title: .buttonAlertGoToMenu,
+                                         style: .default) { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        
+        alertController.addAction(actionRestart)
+        alertController.addAction(actionGoMenu)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     private func moveRebelStarship(for button: UIButton) {
@@ -182,10 +185,46 @@ class SpaceViewController: UIViewController {
                     return
                 }
             default:
-                print("ups: moveXwing")
+                print("ups: rebelStarship")
             }
         }
     }
+    
+    private func fire(imageStarship: UIImageView) {
+        let  rocket = UIView()
+        rocket.layer.cornerRadius = CGFloat(.widthRocket)/2
+        rocket.backgroundColor = .systemYellow
+        view.addSubview(rocket)
+        switch imageStarship {
+        case imageRebelStarship:
+            rocket.frame = CGRect(x: Double(imageStarship.frame.origin.x + imageStarship.frame.width/2 - CGFloat(.widthRocket)/2),
+                                  y: Double(imageStarship.frame.origin.y - CGFloat(.widthRocket)),
+                                  width: CGFloat(.widthRocket),
+                                  height: CGFloat(.widthRocket))
+            
+            UIView.animate(withDuration: 3, delay: 0, options: .curveLinear) {
+                rocket.frame.origin.y = self.view.frame.origin.y
+        } completion: {_ in
+            if self.checkCollisionFrame(empireStarshipFrame: self.imageEmpireStarship.frame, objectFrame: rocket.frame) {
+                self.imageEmpireStarship.removeFromSuperview()
+                rocket.removeFromSuperview()
+            }
+            
+            rocket.removeFromSuperview()
+        }
+            
+        case imageEmpireStarship:
+            rocket.frame = CGRect(x: Double(imageStarship.frame.origin.x + imageStarship.frame.width/2),
+                                  y: Double(imageStarship.frame.origin.y + CGFloat(.widthRocket)),
+                                  width: CGFloat(.widthRocket),
+                                  height: CGFloat(.widthRocket))
+            
+            
+        default:
+            print("ups: fire")
+        }
+    }
+    
     
     
 //MARK: - IBActions
@@ -198,11 +237,15 @@ class SpaceViewController: UIViewController {
     @IBAction func closeView(_ closeViewButton: UIButton) {
        dismiss(animated: true)
     }
+    @IBAction func fire(_ fireButton: UIButton) {
+        fire(imageStarship: imageRebelStarship)
+    }
+    
 }
 
 //MARK: - extensions
 
-extension SpaceViewController: SettingViewProtocol {
+extension GameViewController: ViewProtocol {
     func settingBackgroundView() {
         let image = UIImageView(image: UIImage(named: .imageSpace))
         spaseImage = image.layer
@@ -221,28 +264,36 @@ extension SpaceViewController: SettingViewProtocol {
             
             switch button {
             case leftClickButton:
-                button.frame = CGRect(x: view.frame.minX + CGFloat(integerLiteral: .buttomConstraint),
-                                         y: view.frame.maxY - CGFloat(integerLiteral: .heightControllButton) - CGFloat(integerLiteral: .buttomConstraint),
+                button.frame = CGRect(x: view.frame.minX + CGFloat(integerLiteral: .universalConstraint),
+                                         y: view.frame.maxY - CGFloat(integerLiteral: .heightControllButton) - CGFloat(integerLiteral: .universalConstraint),
                                          width: CGFloat(integerLiteral: .widthСontrollButton),
                                          height: CGFloat(integerLiteral: .heightControllButton))
                 button.setImage(UIImage(systemName: .imageButtonLeftClick), for: [])
                 button.addTarget(self, action: #selector(self.goToLeft(_:)), for: .touchUpInside)
             case rightClickButton:
-                button.frame = CGRect(x: view.frame.maxX - CGFloat(integerLiteral: .widthСontrollButton) - CGFloat(integerLiteral: .buttomConstraint),
-                                          y: view.frame.maxY - CGFloat(integerLiteral: .heightControllButton) - CGFloat(integerLiteral: .buttomConstraint),
+                button.frame = CGRect(x: view.frame.maxX - CGFloat(integerLiteral: .widthСontrollButton) - CGFloat(integerLiteral: .universalConstraint),
+                                          y: view.frame.maxY - CGFloat(integerLiteral: .heightControllButton) - CGFloat(integerLiteral: .universalConstraint),
                                           width: CGFloat(integerLiteral: .widthСontrollButton),
                                           height: CGFloat(integerLiteral: .heightControllButton))
                 button.setImage(UIImage(systemName: .imageButtonRightClick), for: [])
                 button.addTarget(self, action: #selector(self.goToRight(_:)), for: .touchUpInside)
                 
             case closeViewButton:
-                button.frame = CGRect(x: view.frame.minX + CGFloat(integerLiteral: .buttomConstraint),
-                                      y: view.frame.minY + CGFloat(integerLiteral: .heightCloseWiewButton) + CGFloat(integerLiteral: .buttomConstraint),
-                                         width: CGFloat(integerLiteral: .widthCloseWiewButton),
-                                         height: CGFloat(integerLiteral: .heightCloseWiewButton))
-                button.layer.cornerRadius = CGFloat(.widthCloseWiewButton/2)
+                button.frame = CGRect(x: view.frame.minX + CGFloat(integerLiteral: .universalConstraint),
+                                      y: view.frame.minY + CGFloat(integerLiteral: .heightNavigationButton) + CGFloat(integerLiteral: .universalConstraint),
+                                         width: CGFloat(integerLiteral: .widthNavigationButton),
+                                         height: CGFloat(integerLiteral: .heightNavigationButton))
+                button.layer.cornerRadius = CGFloat(.widthNavigationButton/2)
                 button.setImage(UIImage(systemName: .imageMenu), for: [])
                 button.addTarget(self, action: #selector(self.closeView(_:)), for: .touchUpInside)
+                
+            case fireButton:
+                button.frame = CGRect(x: view.frame.maxX - CGFloat(integerLiteral: .widthСontrollButton) - CGFloat(integerLiteral: .universalConstraint),
+                                          y: view.frame.maxY - 2*CGFloat(integerLiteral: .heightControllButton) - 2*CGFloat(integerLiteral: .universalConstraint),
+                                          width: CGFloat(integerLiteral: .widthСontrollButton),
+                                          height: CGFloat(integerLiteral: .heightControllButton))
+                button.setImage(UIImage(systemName: .imageButtonFire), for: [])
+                button.addTarget(self, action: #selector(self.fire(_:)), for: .touchUpInside)
             default:
                 print("ups: Button")
             }
@@ -265,6 +316,7 @@ extension String {
     
     static let imageButtonLeftClick = "arrowshape.left"
     static let imageButtonRightClick = "arrowshape.right"
+    static let imageButtonFire =  "smallcircle.fill.circle"
     
     static let fontName = "Futura Bold"
     
@@ -278,7 +330,7 @@ extension Int {
     static let widthСontrollButton = 60
     static let heightControllButton = 60
     
-    static let buttomConstraint = 16
+    static let universalConstraint = 16
     
     static let widthGameScore = 100
     static let heightGameScore = 60
@@ -292,6 +344,8 @@ extension Int {
 extension Double {
     
     static let alpha = 0.5
+    static let widthRocket = 10.0
+    
 }
 
 

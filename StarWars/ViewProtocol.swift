@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol SettingViewProtocol: AnyObject {
+protocol ViewProtocol: AnyObject {
     func settingBackgroundView()
     func settingButtons(for buttons: [UIButton])
 }

@@ -30,10 +30,10 @@ class ResultsViewController: UIViewController {
     }
     
     private func settingTableView() {
-        tableViewResults = UITableView(frame: CGRect(x:view.frame.origin.x + CGFloat(integerLiteral: .buttomConstraint),
-                                                     y: view.frame.origin.y + closeViewButton.frame.maxY + CGFloat(integerLiteral: .buttomConstraint),
-                                                     width: view.frame.width - 2*CGFloat(integerLiteral: .buttomConstraint),
-                                                     height: view.frame.height - CGFloat(integerLiteral: .buttomConstraint)))
+        tableViewResults = UITableView(frame: CGRect(x:view.frame.origin.x + CGFloat(integerLiteral: .universalConstraint),
+                                                     y: view.frame.origin.y + closeViewButton.frame.maxY + CGFloat(integerLiteral: .universalConstraint),
+                                                     width: view.frame.width - 2*CGFloat(integerLiteral: .universalConstraint),
+                                                     height: view.frame.height - CGFloat(integerLiteral: .universalConstraint)))
         view.layer.insertSublayer(tableViewResults.layer, at: 1)
         tableViewResults.backgroundColor = .clear
         tableViewResults.delegate = self
@@ -49,7 +49,7 @@ class ResultsViewController: UIViewController {
     }
 }
 //MARK: - extensions
-extension ResultsViewController: SettingViewProtocol {
+extension ResultsViewController: ViewProtocol {
     func settingBackgroundView() {
         let image = UIImageView(image: UIImage(named: .imageSpace))
         backgroundImage = image.layer
@@ -58,20 +58,22 @@ extension ResultsViewController: SettingViewProtocol {
     
     func settingButtons(for buttons: [UIButton]) {
         _ = buttons.map { button in
-            button.backgroundColor = .black
-            button.tintColor = .white
-            button.layer.cornerRadius = CGFloat(.heightCloseWiewButton/2)
-            button.alpha = Double(.alpha)
+            button.layer.cornerRadius = CGFloat(.cornerRadiusCell)
+            button.layer.borderWidth = CGFloat(.borderWidthCell)
+            button.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
+            button.clipsToBounds = true
+            button.tintColor = .systemGray
+            button.layer.cornerRadius = CGFloat(.heightNavigationButton/2)
             let layerButton = button.layer
             
             view.layer.insertSublayer(layerButton, at: 1)
             
             switch button {
             case closeViewButton:
-                button.frame = CGRect(x: view.frame.minX + CGFloat(integerLiteral: .buttomConstraint),
-                                      y: view.frame.minY + CGFloat(integerLiteral: .heightCloseWiewButton) + CGFloat(integerLiteral: .buttomConstraint),
-                                         width: CGFloat(integerLiteral: .widthCloseWiewButton),
-                                         height: CGFloat(integerLiteral: .heightCloseWiewButton))
+                button.frame = CGRect(x: view.frame.minX + CGFloat(integerLiteral: .universalConstraint),
+                                      y: view.frame.minY + CGFloat(integerLiteral: .heightNavigationButton) + CGFloat(integerLiteral: .universalConstraint),
+                                         width: CGFloat(integerLiteral: .widthNavigationButton),
+                                         height: CGFloat(integerLiteral: .heightNavigationButton))
                 button.setImage(UIImage(systemName: .imageMenu), for: [])
                 button.addTarget(self, action: #selector(self.closeView(_:)), for: .touchUpInside)
             default:
@@ -87,28 +89,23 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: .identifireCellResults, for: indexPath) as! ResultsTableViewCell
-        cell.settingCell()
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: .identifireCellResults, for: indexPath) as? ResultsTableViewCell
+        cell?.settingCellResultdTable()
+        return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(integerLiteral: .heightCloseWiewButton)
+        return CGFloat(integerLiteral: .heightCell)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
-
-
-
-
-
-
 extension Int {
-    static let widthCloseWiewButton = 40
-    static let heightCloseWiewButton = 40
+    static let widthNavigationButton = 40
+    static let heightNavigationButton = 40
+    static let heightCell = 60
 }
 extension String {
     static let imageMenu = "line.horizontal.3.decrease"
