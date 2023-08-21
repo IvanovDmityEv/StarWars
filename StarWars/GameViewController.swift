@@ -106,6 +106,7 @@ class GameViewController: UIViewController {
                                           width: Int(view.frame.width) / .countCell,
                                  height: Int(view.frame.width) / .countCell,
                                  nameStarship: randomStarsip)
+            
             imageEmpireStarship.frame = CGRect(x: empireStarship.positionX,
                                          y: empireStarship.positionY,
                                          width: empireStarship.width,
@@ -163,8 +164,6 @@ class GameViewController: UIViewController {
 //        let countIteration = Int((view.frame.maxY - leftClickButton.frame.height - CGFloat(integerLiteral: .universalConstraint))/imageEmpireStarship.frame.height)
 
 //        animator.fractionComplete = CGFloat(0.5)
-
-        
         
         UIView.animate(withDuration: 3, delay: 0, options: .curveLinear) {
             imageEmpireStarship.frame.origin.y += self.imageRebelStarship.frame.origin.y + self.imageRebelStarship.frame.height
@@ -368,6 +367,3 @@ extension GameViewController: ViewProtocol {
         }
     }
 }
-
-
-
