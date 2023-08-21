@@ -16,7 +16,12 @@ class SettingsViewController: UIViewController {
     var playerName = UITextField()
     var stepper = UIStepper()
     var resultLabel = UILabel()
-
+    var arrayStarships: [String] = []
+    
+//    var settingsTuple: (Int?, String?, Int?)
+    var indexSelectedStarship: Int?
+    var settings = GameSettings.shared
+    
 //MARK: - lifecycle func
     
     override func viewDidLoad() {
@@ -61,6 +66,7 @@ class SettingsViewController: UIViewController {
         
         starshipsCollectionView.register(SettingsCollectionViewCell.self, forCellWithReuseIdentifier: .identifireCellSettings)
         starshipsCollectionView.backgroundColor = .clear
+        arrayStarships = [.imageXWing, .imageMilleniumFalcon, .imageRebellionShip]
     }
     
     func settingTextFieldName() {
@@ -83,17 +89,21 @@ class SettingsViewController: UIViewController {
         playerName.layer.borderWidth =  CGFloat(.borderWidthCell)
         playerName.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
         playerName.clipsToBounds = true
+        playerName.delegate = self
+        if settings.namePlayer != nil, settings.namePlayer != "" {
+            playerName.text = settings.namePlayer
+        }
     }
     
-    func settingStepper() {
+    private func settingStepper() {
         stepper.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stepper)
         stepper.minimumValue = 1
         stepper.maximumValue = 3
         stepper.alpha = CGFloat(.alpha)
         
-        //Заглушка!!!
-        stepper.stepValue = 1
+        
+        stepper.value = Double(settings.speedGame ?? 1)
         
         stepper.addTarget(self, action: #selector(stepperValueChanged), for: .valueChanged)
         
@@ -120,11 +130,25 @@ class SettingsViewController: UIViewController {
     
     @objc func stepperValueChanged() {
         updateResultLabel(value: stepper.value)
+//        settingsTuple.2 = Int(stepper.value)
     }
     
-    func updateResultLabel(value: Double) {
+    private func updateResultLabel(value: Double) {
         let text: String = .textForLabelResult
         resultLabel.text = "\(text) \(Int(value))"
+    }
+    
+    private func showAlertError() {
+        let alertController = UIAlertController(title: .titleAlertError,
+                                                message: nil,
+                                                preferredStyle: .alert)
+        alertController.view.tintColor = .black
+        
+        let actionOk = UIAlertAction(title: .buttonOkAlertError,
+                                         style: .default)
+        
+        alertController.addAction(actionOk)
+        self.present(alertController, animated: true, completion: nil)
     }
     
 
@@ -135,8 +159,20 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func saveSettings(_ saveSettingsButton: UIButton) {
-        //Заглушка!!!
-       dismiss(animated: true)
+        view.endEditing(true)
+//        if settingsTuple.1 != nil, settingsTuple.1 != "" {
+//            settings.indexStarship = settingsTuple.0 ?? 0
+//            settings.namePlayer = settingsTuple.1
+//            settings.speedGame = settingsTuple.2 ?? 1
+//            dismiss(animated: true)
+        if playerName.text != nil, playerName.text != "" {
+            settings.indexStarship = indexSelectedStarship
+            settings.namePlayer = playerName.text
+            settings.speedGame = Int(stepper.value)
+            dismiss(animated: true)
+        } else {
+            showAlertError()
+        }
     }
 }
 
@@ -184,18 +220,51 @@ extension SettingsViewController: ViewProtocol {
 
 extension SettingsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //Заглушка!!!
-        3
+        arrayStarships.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .identifireCellSettings, for: indexPath) as? SettingsCollectionViewCell ?? SettingsCollectionViewCell()
         
-        cell.settingCellSettingstCollection()
-        
+        cell.settingCellSettingstCollection(imageName: arrayStarships[indexPath.row])
+
+        let idexSelectStarship = settings.indexStarship
+        if indexPath.row == idexSelectStarship {
+            let indexPathToSelect = IndexPath(row: indexPath.row, section: indexPath.section)
+            cell.contentView.backgroundColor = UIColor.systemGray5.withAlphaComponent(CGFloat(.alpha))
+            collectionView.selectItem(at: indexPathToSelect, animated: true, scrollPosition: .centeredHorizontally)
+            indexSelectedStarship = indexPath.row
+        }
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            cell.contentView.backgroundColor = UIColor.systemGray5.withAlphaComponent(CGFloat(.alpha))
+            indexSelectedStarship = indexPath.row
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            cell.contentView.backgroundColor = UIColor.clear
+        }
+    }
 }
+
+extension SettingsViewController: UITextFieldDelegate {
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        if let enteredText = textField.text {
+//            settingsTuple.1 = enteredText
+//        }
+//    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
 
 extension String {
     static let identifireCellSettings = "identifireCellSettings"

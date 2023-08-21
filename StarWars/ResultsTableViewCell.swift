@@ -88,4 +88,5 @@ extension Double {
     static let heightTextCell = 60.0
     static let cornerRadiusCell = 10.0
     static let borderWidthCell = 1.0
+
 }

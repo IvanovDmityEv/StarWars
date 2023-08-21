@@ -13,6 +13,7 @@
 		2C3114A02A7A754E00D94CA1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31149F2A7A754E00D94CA1 /* SettingsViewController.swift */; };
 		2C4F7AA62A8D026000222A02 /* ResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F7AA52A8D026000222A02 /* ResultsTableViewCell.swift */; };
 		2C4F7AAF2A8E5CEF00222A02 /* SettingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F7AAE2A8E5CEF00222A02 /* SettingsCollectionViewCell.swift */; };
+		2C4F7AD12A93514400222A02 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F7AD02A93514400222A02 /* GameSettings.swift */; };
 		2CC1940F2A73E78700E30D8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC1940E2A73E78700E30D8D /* AppDelegate.swift */; };
 		2CC194112A73E78700E30D8D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC194102A73E78700E30D8D /* SceneDelegate.swift */; };
 		2CC194132A73E78700E30D8D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC194122A73E78700E30D8D /* GameViewController.swift */; };
@@ -28,6 +29,7 @@
 		2C31149F2A7A754E00D94CA1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2C4F7AA52A8D026000222A02 /* ResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTableViewCell.swift; sourceTree = "<group>"; };
 		2C4F7AAE2A8E5CEF00222A02 /* SettingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCollectionViewCell.swift; sourceTree = "<group>"; };
+		2C4F7AD02A93514400222A02 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		2CC1940B2A73E78700E30D8D /* StarWars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarWars.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC1940E2A73E78700E30D8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CC194102A73E78700E30D8D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				2C4F7AA52A8D026000222A02 /* ResultsTableViewCell.swift */,
 				2C31149F2A7A754E00D94CA1 /* SettingsViewController.swift */,
 				2C4F7AAE2A8E5CEF00222A02 /* SettingsCollectionViewCell.swift */,
+				2C4F7AD02A93514400222A02 /* GameSettings.swift */,
 				2C3114992A7A374C00D94CA1 /* ViewProtocol.swift */,
 				2CC194222A73F21E00E30D8D /* Starship.swift */,
 				2CC194172A73E78800E30D8D /* Assets.xcassets */,
@@ -157,6 +160,7 @@
 			files = (
 				2CC194132A73E78700E30D8D /* GameViewController.swift in Sources */,
 				2CC1940F2A73E78700E30D8D /* AppDelegate.swift in Sources */,
+				2C4F7AD12A93514400222A02 /* GameSettings.swift in Sources */,
 				2C4F7AAF2A8E5CEF00222A02 /* SettingsCollectionViewCell.swift in Sources */,
 				2C31149A2A7A374C00D94CA1 /* ViewProtocol.swift in Sources */,
 				2C3114A02A7A754E00D94CA1 /* SettingsViewController.swift in Sources */,

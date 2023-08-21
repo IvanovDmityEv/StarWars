@@ -18,6 +18,8 @@ class GameViewController: UIViewController {
     var empireStarships: [UIImageView] = []
     var rockets: [UIView] = []
     let closeViewButton = UIButton(type: .system)
+    
+    var settings = GameSettings.shared
 
 //MARK: - lifecycle func
     override func viewDidLoad() {
@@ -70,11 +72,12 @@ class GameViewController: UIViewController {
             }
             
             guard let imageEmpireStarship = self.createStarship(name: .empireStarship) else { return }
+
             //!!!
             self.empireStarships.append(imageEmpireStarship)
             
             let layerEmpireStarship = imageEmpireStarship.layer
-            self.view.layer.insertSublayer(layerEmpireStarship, at: 1)
+            self.view.layer.insertSublayer(layerEmpireStarship, at: 2)
             self.moveEmpireStarship(imageEmpireStarship)
         }
     }
@@ -97,13 +100,12 @@ class GameViewController: UIViewController {
         case .empireStarship:
             guard let randomStarsip = starships.randomElement() else { return nil }
             let imageEmpireStarship = UIImageView()
-            
+
             let empireStarship = Starship(positionX: randomX,
                                  positionY: Int(view.frame.minY) - widthStarship,
                                  width: Int(view.frame.width) / .countCell,
                                  height: Int(view.frame.width) / .countCell,
                                  nameStarship: randomStarsip)
-            
             imageEmpireStarship.frame = CGRect(x: empireStarship.positionX,
                                          y: empireStarship.positionY,
                                          width: empireStarship.width,
@@ -112,17 +114,22 @@ class GameViewController: UIViewController {
             return imageEmpireStarship
             
         case .rebelStarship:
+            let positionY = view.frame.maxY - leftClickButton.frame.height - CGFloat(integerLiteral: .universalConstraint) - CGFloat(widthStarship)
             let rebelStarship = Starship(positionX: Int(view.frame.maxX/2) - widthStarship/2,
-                                 positionY: Int(view.frame.maxY) - widthStarship * 2 - .universalConstraint,
+                                         positionY: Int(positionY),
                                  width: Int(view.frame.width) / .countCell,
                                  height: Int(view.frame.width) / .countCell,
                                  nameStarship: .imageXWing)
-
+//
             imageRebelStarship.frame = CGRect(x: rebelStarship.positionX,
                                          y: rebelStarship.positionY,
                                          width: rebelStarship.width,
                                          height: rebelStarship.height)
-            imageRebelStarship.image = UIImage(named: rebelStarship.name)
+            let namesRebelStarships: [String] = [.imageXWing, .imageMilleniumFalcon, .imageRebellionShip]
+            let selectedRebelStarship = namesRebelStarships[settings.indexStarship ?? 0]
+            
+            imageRebelStarship.image = UIImage(named: selectedRebelStarship)
+            
             return imageRebelStarship
             
             default:
@@ -133,9 +140,35 @@ class GameViewController: UIViewController {
     
     private func moveEmpireStarship(_ imageEmpireStarship: UIImageView) {
         
+//        let animator = UIViewPropertyAnimator(duration: 3, curve: .linear){
+//            imageEmpireStarship.frame.origin.y += self.imageRebelStarship.frame.origin.y + self.imageRebelStarship.frame.height
+//        }
+//
+//
+//
+//        animator.addCompletion { position in
+//            if position == .end {
+//                print("jsdhfskdhf")
+//                if self.checkCollisionFrame(empireStarshipFrame: imageEmpireStarship.frame, objectFrame: self.imageRebelStarship.frame) {
+//                    self.imageRebelStarship.removeFromSuperview()
+//                    self.showAlert()
+//
+//                }
+//            }
+//            imageEmpireStarship.removeFromSuperview()
+//        }
+//
+//        animator.startAnimation()
+//
+//        let countIteration = Int((view.frame.maxY - leftClickButton.frame.height - CGFloat(integerLiteral: .universalConstraint))/imageEmpireStarship.frame.height)
+
+//        animator.fractionComplete = CGFloat(0.5)
+
+        
+        
         UIView.animate(withDuration: 3, delay: 0, options: .curveLinear) {
             imageEmpireStarship.frame.origin.y += self.imageRebelStarship.frame.origin.y + self.imageRebelStarship.frame.height
-            
+
         } completion: {_ in
 
             if self.checkCollisionFrame(empireStarshipFrame: imageEmpireStarship.frame, objectFrame: self.imageRebelStarship.frame) {
@@ -144,12 +177,11 @@ class GameViewController: UIViewController {
             }
 
         imageEmpireStarship.removeFromSuperview()
-            
+
             //!!!
             if let index = self.empireStarships.firstIndex(of: imageEmpireStarship) {
                 self.empireStarships.remove(at: index)
             }
-            
         }
     }
     
@@ -166,6 +198,9 @@ class GameViewController: UIViewController {
         let actionRestart = UIAlertAction(title: .buttonAlertRestart,
                                           style: .default) { [weak self] _ in
             self?.addStarships()
+            self?.empireStarships = []
+            self?.rockets = []
+            
         }
         let actionGoMenu = UIAlertAction(title: .buttonAlertGoToMenu,
                                          style: .default) { [weak self] _ in
@@ -203,9 +238,10 @@ class GameViewController: UIViewController {
     private func fire(imageStarship: UIImageView) {
         let  rocket = UIView()
         rocket.layer.cornerRadius = CGFloat(.widthRocket)/2
-        rocket.backgroundColor = .systemYellow
+        rocket.backgroundColor = .systemRed
+
         let layerRocket = rocket.layer
-        self.view.layer.insertSublayer(layerRocket, at: 1)
+        self.view.layer.insertSublayer(layerRocket, at: 2)
         rockets.append(rocket)
         switch imageStarship {
         case imageRebelStarship:
@@ -214,25 +250,27 @@ class GameViewController: UIViewController {
                                   width: CGFloat(.widthRocket),
                                   height: CGFloat(.widthRocket))
             
-            UIView.animate(withDuration: 3, delay: 0, options: .curveLinear) {
-                rocket.frame.origin.y = self.view.frame.origin.y
-                
-
-        } completion: {_ in
-//            if self.checkCollisionFrame(empireStarshipFrame: self.imageEmpireStarship.frame, objectFrame: rocket.frame) {
-//                self.imageEmpireStarship.removeFromSuperview()
-//                rocket.removeFromSuperview()
-//            }
+            let countIteration = (Int(rocket.frame.origin.y) - Int(self.view.frame.origin.y))/Int(imageStarship.frame.height)
             
-            rocket.removeFromSuperview()
+            UIView.animate(withDuration: 3, delay: 0, options: .curveLinear) {
+                
+                for _ in 0...countIteration {
+                    rocket.frame.origin.y -= imageStarship.frame.height
+                    self.checkCollision(rocket: rocket)
+                }
+                
+//                rocket.frame.origin.y = self.view.frame.origin.y
+//                rocket.center = CGPoint(x: rocket.center.x, y: -rocket.bounds.height / 2)
+        } completion: {_ in
             
             //!!!
             if let index = self.rockets.firstIndex(of: rocket) {
                 self.rockets.remove(at: index)
             }
+            rocket.removeFromSuperview()
         }
             //!!!
-            checkCollision(rocket: rocket)
+//            checkCollision(rocket: rocket)
             
         default:
             print("ups: fire")
@@ -242,6 +280,8 @@ class GameViewController: UIViewController {
     //!!!
     func checkCollision(rocket: UIView) {
          for starship in empireStarships {
+             print(rocket.frame)
+             print(starship.frame)
              if rocket.frame.intersects(starship.frame) {
                  rocket.removeFromSuperview()
                  starship.removeFromSuperview()
@@ -339,6 +379,7 @@ extension String {
     static let imageCommandShuttle = "commandShuttle"
     static let imageXWing = "xWing"
     static let imageRebellionShip = "rebellionShip"
+    static let imageMilleniumFalcon = "milleniumFalcon"
     static let imageSpace = "space"
     
     static let empireStarship = "empireStarship"
@@ -354,6 +395,9 @@ extension String {
     static let messageAlert = "You were shot down by an imperial fighter"
     static let buttonAlertRestart = "Restart"
     static let buttonAlertGoToMenu = "Menu"
+    static let titleAlertError = "Name not specified"
+    static let buttonOkAlertError = "OK"
+    
 }
 
 extension Int {

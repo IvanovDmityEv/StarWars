@@ -31,15 +31,13 @@ class SettingsCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func settingCellSettingstCollection() {
+    func settingCellSettingstCollection(imageName: String) {
         self.backgroundColor = .clear
         self.layer.cornerRadius = CGFloat(.cornerRadiusCell)
         self.layer.borderWidth = CGFloat(.borderWidthCell)
         self.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
         self.clipsToBounds = true
         
-        
-        //Заглушка!
-        imageStarship.image = UIImage(named: .imageXWing)
+        imageStarship.image = UIImage(named: imageName)
     }
 }
