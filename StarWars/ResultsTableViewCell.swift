@@ -71,8 +71,8 @@ class ResultsTableViewCell: UITableViewCell {
 //MARK: - flow funcs
     func settingCellResultdTable() {
         self.backgroundColor = .clear
-        self.layer.cornerRadius = CGFloat(.cornerRadiusCell)
-        self.layer.borderWidth = CGFloat(.borderWidthCell)
+        self.layer.cornerRadius = CGFloat(integerLiteral: .cornerRadiusCell)
+        self.layer.borderWidth = CGFloat(integerLiteral: .borderWidthCell)
         self.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
         self.clipsToBounds = true
         
@@ -81,12 +81,4 @@ class ResultsTableViewCell: UITableViewCell {
         result.text = "20"
         imageStarship.image = UIImage(named: .imageXWing)
     }
-}
-
-extension Double {
-    static let widthTextCell = 100.0
-    static let heightTextCell = 60.0
-    static let cornerRadiusCell = 10.0
-    static let borderWidthCell = 1.0
-
 }

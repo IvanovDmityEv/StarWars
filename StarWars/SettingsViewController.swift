@@ -55,13 +55,13 @@ class SettingsViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             starshipsCollectionView.topAnchor.constraint(equalTo: view.topAnchor,
-                                                        constant: CGFloat(integerLiteral: .topAnchorConstantCollectionView)),
+                                                         constant: CGFloat( integerLiteral: .topAnchorConstantCollectionView)),
             starshipsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                            constant: CGFloat(integerLiteral: .universalConstraint)),
+                                                             constant: CGFloat( integerLiteral: .universalConstraint)),
             starshipsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                             constant: -CGFloat(integerLiteral: .universalConstraint)),
+                                                              constant: -CGFloat( integerLiteral: .universalConstraint)),
             starshipsCollectionView.bottomAnchor.constraint(equalTo: starshipsCollectionView.topAnchor,
-                                                           constant: CGFloat(integerLiteral: .heightSettingsCollectionView))
+                                                            constant: CGFloat( integerLiteral: .heightSettingsCollectionView))
                 ])
         
         starshipsCollectionView.register(SettingsCollectionViewCell.self, forCellWithReuseIdentifier: .identifireCellSettings)
@@ -74,19 +74,19 @@ class SettingsViewController: UIViewController {
         view.addSubview(playerName)
         NSLayoutConstraint.activate([
             playerName.topAnchor.constraint(equalTo: starshipsCollectionView.bottomAnchor,
-                                                        constant: CGFloat(integerLiteral: .universalConstraint)),
+                                            constant: CGFloat( integerLiteral: .universalConstraint)),
             playerName.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                            constant: CGFloat(integerLiteral: .universalConstraint)),
+                                                constant: CGFloat( integerLiteral: .universalConstraint)),
             playerName.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                             constant: -CGFloat(integerLiteral: .universalConstraint)),
+                                                 constant: -CGFloat( integerLiteral: .universalConstraint)),
                 ])
         
         playerName.backgroundColor = .clear
-        playerName.layer.cornerRadius = CGFloat(.cornerRadiusCell)
+        playerName.layer.cornerRadius = CGFloat(integerLiteral: .cornerRadiusCell)
         playerName.borderStyle = .roundedRect
         playerName.placeholder = .placeholderTextFieldName
         playerName.autocorrectionType = .no
-        playerName.layer.borderWidth =  CGFloat(.borderWidthCell)
+        playerName.layer.borderWidth =  CGFloat(integerLiteral: .borderWidthCell)
         playerName.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
         playerName.clipsToBounds = true
         playerName.delegate = self
@@ -117,13 +117,13 @@ class SettingsViewController: UIViewController {
         view.addSubview(resultLabel)
         NSLayoutConstraint.activate([
             stepper.topAnchor.constraint(equalTo: playerName.bottomAnchor,
-                                                        constant: CGFloat(integerLiteral: .universalConstraint)),
+                                         constant: CGFloat( integerLiteral: .universalConstraint)),
             stepper.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                             constant: CGFloat(integerLiteral: .universalConstraint)),
+                                             constant: CGFloat( integerLiteral: .universalConstraint)),
             resultLabel.topAnchor.constraint(equalTo: playerName.bottomAnchor,
-                                                        constant: CGFloat(integerLiteral: .universalConstraint)),
+                                             constant: CGFloat( integerLiteral: .universalConstraint)),
             resultLabel.leadingAnchor.constraint(equalTo: stepper.trailingAnchor,
-                                                             constant: CGFloat(integerLiteral: .universalConstraint)),
+                                                 constant: CGFloat( integerLiteral: .universalConstraint)),
                 ])
         updateResultLabel(value: stepper.value)
     }
@@ -186,8 +186,8 @@ extension SettingsViewController: ViewProtocol {
     
     func settingButtons(for buttons: [UIButton]) {
         _ = buttons.map { button in
-            button.layer.cornerRadius = CGFloat(.cornerRadiusCell)
-            button.layer.borderWidth = CGFloat(.borderWidthCell)
+            button.layer.cornerRadius = CGFloat(integerLiteral: .cornerRadiusCell)
+            button.layer.borderWidth = CGFloat(integerLiteral: .borderWidthCell)
             button.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
             button.clipsToBounds = true
             button.tintColor = .systemGray
@@ -199,16 +199,16 @@ extension SettingsViewController: ViewProtocol {
             switch button {
             case closeViewButton:
                 button.frame = CGRect(x: view.frame.minX + CGFloat(integerLiteral: .universalConstraint),
-                                      y: view.frame.minY + CGFloat(integerLiteral: .heightNavigationButton) + CGFloat(integerLiteral: .universalConstraint),
-                                         width: CGFloat(integerLiteral: .widthNavigationButton),
-                                         height: CGFloat(integerLiteral: .heightNavigationButton))
-                button.setImage(UIImage(systemName: .imageMenu), for: [])
+                                      y: view.frame.minY + CGFloat( integerLiteral: .heightNavigationButton) + CGFloat( integerLiteral: .universalConstraint),
+                                      width: CGFloat( integerLiteral: .widthNavigationButton),
+                                      height: CGFloat( integerLiteral: .heightNavigationButton))
+                button.setImage(UIImage(systemName: .imageButtonMenu), for: [])
                 button.addTarget(self, action: #selector(self.closeView(_:)), for: .touchUpInside)
             case saveSettingsButton:
-                button.frame = CGRect(x: view.frame.maxX - CGFloat(integerLiteral: .universalConstraint) - CGFloat(integerLiteral: .widthNavigationButton),
-                                      y: view.frame.minY + CGFloat(integerLiteral: .heightNavigationButton) + CGFloat(integerLiteral: .universalConstraint),
-                                         width: CGFloat(integerLiteral: .widthNavigationButton),
-                                         height: CGFloat(integerLiteral: .heightNavigationButton))
+                button.frame = CGRect(x: view.frame.maxX - CGFloat(integerLiteral: .universalConstraint) - CGFloat( integerLiteral: .widthNavigationButton),
+                                      y: view.frame.minY + CGFloat( integerLiteral: .heightNavigationButton) + CGFloat( integerLiteral: .universalConstraint),
+                                      width: CGFloat( integerLiteral: .widthNavigationButton),
+                                      height: CGFloat( integerLiteral: .heightNavigationButton))
                 button.setTitle(.titleButtonSaveSettings, for: .normal)
                 button.addTarget(self, action: #selector(self.saveSettings(_:)), for: .touchUpInside)
             default:
@@ -264,18 +264,3 @@ extension SettingsViewController: UITextFieldDelegate {
         return true
     }
 }
-
-
-extension String {
-    static let identifireCellSettings = "identifireCellSettings"
-    static let placeholderTextFieldName = "Enter your name"
-    static let textForLabelResult = "Game speed:"
-    static let titleButtonSaveSettings = "save"
-}
-
-extension Int {
-    static let heightSettingsCollectionView = 160
-    static let topAnchorConstantCollectionView = 120
-    static let heightCellSettingsCollectionView = 140
-}
-

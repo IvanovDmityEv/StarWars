@@ -14,28 +14,28 @@ struct GameSettings {
 
     var indexStarship: Int? {
         get {
-            return userDefaults.integer(forKey: "indexStarship")
+            return userDefaults.integer(forKey: .indexStarship)
         }
         set {
-            userDefaults.set(newValue, forKey: "indexStarship")
+            userDefaults.set(newValue, forKey: .indexStarship)
         }
     }
 
     var namePlayer: String? {
         get {
-            return userDefaults.string(forKey: "namePlayer")
+            return userDefaults.string(forKey: .namePlayer)
         }
         set {
-            userDefaults.set(newValue, forKey: "namePlayer")
+            userDefaults.set(newValue, forKey: .namePlayer)
         }
     }
 
     var speedGame: Int? {
         get {
-            return userDefaults.integer(forKey: "speedGame")
+            return userDefaults.integer(forKey: .speedGame)
         }
         set {
-            userDefaults.set(newValue, forKey: "speedGame")
+            userDefaults.set(newValue, forKey: .speedGame)
         }
     }
 }

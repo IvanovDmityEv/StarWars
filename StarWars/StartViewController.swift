@@ -67,7 +67,7 @@ extension StartViewController: ViewProtocol {
         _ = buttons.map { button in
             button.backgroundColor = .black
             button.tintColor = .white
-            button.layer.cornerRadius = CGFloat(.heightMenuStartButton/2)
+            button.layer.cornerRadius = CGFloat(integerLiteral: .heightMenuStartButton/2)
             button.alpha = 0.5
             let layerButton = button.layer
             
@@ -78,26 +78,26 @@ extension StartViewController: ViewProtocol {
             case startButton:
                 button.frame = CGRect(x: (view.frame.width - CGFloat(integerLiteral: .widthMenuStartButton))/2,
                                       y: view.frame.height/2 - CGFloat(integerLiteral: .heightMenuStartButton) - CGFloat(integerLiteral: .universalConstraint),
-                                         width: CGFloat(integerLiteral: .widthMenuStartButton),
-                                         height: CGFloat(integerLiteral: .heightMenuStartButton))
+                                      width: CGFloat(integerLiteral: .widthMenuStartButton),
+                                      height: CGFloat(integerLiteral: .heightMenuStartButton))
                 button.setImage(UIImage(systemName: .imageButtonStart), for: [])
                 button.addTarget(self, action: #selector(self.startGame(_:)), for: .touchUpInside)
                 button.setTitle(.nameButtonGame, for: .normal)
                 
             case resultsButton:
-                button.frame = CGRect(x: (view.frame.width - CGFloat(integerLiteral: .widthMenuStartButton))/2,
+                button.frame = CGRect(x: (view.frame.width - CGFloat(integerLiteral:.widthMenuStartButton))/2,
                                       y: view.frame.height/2,
-                                          width: CGFloat(integerLiteral: .widthMenuStartButton),
-                                          height: CGFloat(integerLiteral: .heightMenuStartButton))
+                                      width: CGFloat(integerLiteral: .widthMenuStartButton),
+                                      height: CGFloat(integerLiteral: .heightMenuStartButton))
                 button.setImage(UIImage(systemName: .imageButtonResults), for: [])
                 button.addTarget(self, action: #selector(self.showResults(_:)), for: .touchUpInside)
                 button.setTitle(.nameButtonResults, for: .normal)
             
             case settingsButton:
-                button.frame = CGRect(x: (view.frame.width - CGFloat(integerLiteral: .widthMenuStartButton))/2,
+                button.frame = CGRect(x: (view.frame.width - CGFloat(integerLiteral:.widthMenuStartButton))/2,
                                       y: view.frame.height/2 + CGFloat(integerLiteral: .heightMenuStartButton) + CGFloat(integerLiteral: .universalConstraint),
-                                          width: CGFloat(integerLiteral: .widthMenuStartButton),
-                                          height: CGFloat(integerLiteral: .heightMenuStartButton))
+                                      width: CGFloat(integerLiteral: .widthMenuStartButton),
+                                      height: CGFloat(integerLiteral: .heightMenuStartButton))
                 button.setImage(UIImage(systemName: .imageButtonSettings), for: [])
                 button.addTarget(self, action: #selector(self.showSettings(_:)), for: .touchUpInside)
                 button.setTitle(.nameButtonSettings, for: .normal)
@@ -108,20 +108,3 @@ extension StartViewController: ViewProtocol {
         }
     }
 }
-
-extension String {
-    static let nameButtonGame = "GAME"
-    static let nameButtonResults = "RESULTS"
-    static let nameButtonSettings = "SETTINGS"
-    
-    static let imageButtonStart = "gamecontroller"
-    static let imageButtonResults = "person.3"
-    static let imageButtonSettings = "gearshape"
-}
-
-extension Int {
-    static let widthMenuStartButton = 300
-    static let heightMenuStartButton = 60
-}
-
-

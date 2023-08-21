@@ -53,8 +53,8 @@ class GameViewController: UIViewController {
         gameScore.alpha = CGFloat(.alpha)
         gameScore.textAlignment = .center
         
-        gameScore.frame =  CGRect(x: Int(view.frame.maxX)/2 - .widthGameScore/2,
-                                  y: Int(view.frame.maxY) - .heightGameScore - .universalConstraint,
+        gameScore.frame = CGRect(x: Int(view.frame.maxX)/2 - .widthGameScore/2,
+                                 y: Int(view.frame.maxY) - .heightGameScore - .universalConstraint,
                                   width: .widthGameScore,
                                   height: .heightGameScore)
         view.addSubview(gameScore)
@@ -103,7 +103,7 @@ class GameViewController: UIViewController {
 
             let empireStarship = Starship(positionX: randomX,
                                  positionY: Int(view.frame.minY) - widthStarship,
-                                 width: Int(view.frame.width) / .countCell,
+                                          width: Int(view.frame.width) / .countCell,
                                  height: Int(view.frame.width) / .countCell,
                                  nameStarship: randomStarsip)
             imageEmpireStarship.frame = CGRect(x: empireStarship.positionX,
@@ -237,7 +237,7 @@ class GameViewController: UIViewController {
     
     private func fire(imageStarship: UIImageView) {
         let  rocket = UIView()
-        rocket.layer.cornerRadius = CGFloat(.widthRocket)/2
+        rocket.layer.cornerRadius = CGFloat(integerLiteral: .widthRocket)/2
         rocket.backgroundColor = .systemRed
 
         let layerRocket = rocket.layer
@@ -245,10 +245,10 @@ class GameViewController: UIViewController {
         rockets.append(rocket)
         switch imageStarship {
         case imageRebelStarship:
-            rocket.frame = CGRect(x: Double(imageStarship.frame.origin.x + imageStarship.frame.width/2 - CGFloat(.widthRocket)/2),
-                                  y: Double(imageStarship.frame.origin.y - CGFloat(.widthRocket)),
-                                  width: CGFloat(.widthRocket),
-                                  height: CGFloat(.widthRocket))
+            rocket.frame = CGRect(x: CGFloat(Int(imageStarship.frame.origin.x + imageStarship.frame.width/2 - CGFloat(integerLiteral: .widthRocket)/2)),
+                                  y: CGFloat(Int(imageStarship.frame.origin.y)) - CGFloat(integerLiteral: .widthRocket),
+                                  width: CGFloat(integerLiteral: .widthRocket),
+                                  height: CGFloat(integerLiteral: .widthRocket))
             
             let countIteration = (Int(rocket.frame.origin.y) - Int(self.view.frame.origin.y))/Int(imageStarship.frame.height)
             
@@ -280,8 +280,6 @@ class GameViewController: UIViewController {
     //!!!
     func checkCollision(rocket: UIView) {
          for starship in empireStarships {
-             print(rocket.frame)
-             print(starship.frame)
              if rocket.frame.intersects(starship.frame) {
                  rocket.removeFromSuperview()
                  starship.removeFromSuperview()
@@ -335,26 +333,26 @@ extension GameViewController: ViewProtocol {
             switch button {
             case leftClickButton:
                 button.frame = CGRect(x: view.frame.minX + CGFloat(integerLiteral: .universalConstraint),
-                                         y: view.frame.maxY - CGFloat(integerLiteral: .heightControllButton) - CGFloat(integerLiteral: .universalConstraint),
-                                         width: CGFloat(integerLiteral: .widthСontrollButton),
-                                         height: CGFloat(integerLiteral: .heightControllButton))
+                                      y: view.frame.maxY - CGFloat(integerLiteral: .heightControllButton) - CGFloat(integerLiteral: .universalConstraint),
+                                      width: CGFloat(integerLiteral: .widthСontrollButton),
+                                      height: CGFloat(integerLiteral: .heightControllButton))
                 button.setImage(UIImage(systemName: .imageButtonLeftClick), for: [])
                 button.addTarget(self, action: #selector(self.goToLeft(_:)), for: .touchUpInside)
             case rightClickButton:
                 button.frame = CGRect(x: view.frame.maxX - CGFloat(integerLiteral: .widthСontrollButton) - CGFloat(integerLiteral: .universalConstraint),
-                                          y: view.frame.maxY - CGFloat(integerLiteral: .heightControllButton) - CGFloat(integerLiteral: .universalConstraint),
-                                          width: CGFloat(integerLiteral: .widthСontrollButton),
-                                          height: CGFloat(integerLiteral: .heightControllButton))
+                                      y: view.frame.maxY - CGFloat(integerLiteral: .heightControllButton) - CGFloat(integerLiteral: .universalConstraint),
+                                      width: CGFloat(integerLiteral: .widthСontrollButton),
+                                      height: CGFloat(integerLiteral: .heightControllButton))
                 button.setImage(UIImage(systemName: .imageButtonRightClick), for: [])
                 button.addTarget(self, action: #selector(self.goToRight(_:)), for: .touchUpInside)
                 
             case closeViewButton:
                 button.frame = CGRect(x: view.frame.minX + CGFloat(integerLiteral: .universalConstraint),
-                                      y: view.frame.minY + CGFloat(integerLiteral: .heightNavigationButton) + CGFloat(integerLiteral: .universalConstraint),
-                                         width: CGFloat(integerLiteral: .widthNavigationButton),
-                                         height: CGFloat(integerLiteral: .heightNavigationButton))
+                                      y: view.frame.minY + CGFloat(integerLiteral: .heightNavigationButton) + CGFloat( integerLiteral: .universalConstraint),
+                                      width: CGFloat( integerLiteral: .widthNavigationButton),
+                                      height: CGFloat( integerLiteral: .heightNavigationButton))
                 button.layer.cornerRadius = CGFloat(.widthNavigationButton/2)
-                button.setImage(UIImage(systemName: .imageMenu), for: [])
+                button.setImage(UIImage(systemName: .imageButtonMenu), for: [])
                 button.addTarget(self, action: #selector(self.closeView(_:)), for: .touchUpInside)
                 
             case fireButton:
@@ -371,55 +369,5 @@ extension GameViewController: ViewProtocol {
     }
 }
 
-extension String {
-    static let imageDeathStar = "deathStar"
-    static let imageEmpireShip = "empireShip"
-    static let imageTieAdvanced = "tieAdvanced"
-    static let imageTieFighter = "tieFighter"
-    static let imageCommandShuttle = "commandShuttle"
-    static let imageXWing = "xWing"
-    static let imageRebellionShip = "rebellionShip"
-    static let imageMilleniumFalcon = "milleniumFalcon"
-    static let imageSpace = "space"
-    
-    static let empireStarship = "empireStarship"
-    static let rebelStarship = "rebelStarship"
-    
-    static let imageButtonLeftClick = "arrowshape.left"
-    static let imageButtonRightClick = "arrowshape.right"
-    static let imageButtonFire =  "smallcircle.fill.circle"
-    
-    static let fontName = "Futura Bold"
-    
-    static let titleAlert = "Mission failed"
-    static let messageAlert = "You were shot down by an imperial fighter"
-    static let buttonAlertRestart = "Restart"
-    static let buttonAlertGoToMenu = "Menu"
-    static let titleAlertError = "Name not specified"
-    static let buttonOkAlertError = "OK"
-    
-}
-
-extension Int {
-    static let widthСontrollButton = 60
-    static let heightControllButton = 60
-    
-    static let universalConstraint = 16
-    
-    static let widthGameScore = 100
-    static let heightGameScore = 60
-    
-    static let countCell = 5
-    
-    static let sizeFont = 26
-    
-}
-
-extension Double {
-    
-    static let alpha = 0.5
-    static let widthRocket = 10.0
-    
-}
 
 

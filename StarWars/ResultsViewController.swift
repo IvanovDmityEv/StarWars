@@ -30,10 +30,10 @@ class ResultsViewController: UIViewController {
     }
     
     private func settingTableView() {
-        tableViewResults = UITableView(frame: CGRect(x:view.frame.origin.x + CGFloat(integerLiteral: .universalConstraint),
-                                                     y: view.frame.origin.y + closeViewButton.frame.maxY + CGFloat(integerLiteral: .universalConstraint),
-                                                     width: view.frame.width - 2*CGFloat(integerLiteral: .universalConstraint),
-                                                     height: view.frame.height - CGFloat(integerLiteral: .universalConstraint)))
+        tableViewResults = UITableView(frame: CGRect(x:view.frame.origin.x + CGFloat( integerLiteral: .universalConstraint),
+                                                     y: view.frame.origin.y + closeViewButton.frame.maxY + CGFloat( integerLiteral: .universalConstraint),
+                                                     width: view.frame.width - 2*CGFloat( integerLiteral: .universalConstraint),
+                                                     height: view.frame.height - CGFloat( integerLiteral: .universalConstraint)))
         view.layer.insertSublayer(tableViewResults.layer, at: 1)
         tableViewResults.backgroundColor = .clear
         tableViewResults.delegate = self
@@ -58,8 +58,8 @@ extension ResultsViewController: ViewProtocol {
     
     func settingButtons(for buttons: [UIButton]) {
         _ = buttons.map { button in
-            button.layer.cornerRadius = CGFloat(.cornerRadiusCell)
-            button.layer.borderWidth = CGFloat(.borderWidthCell)
+            button.layer.cornerRadius = CGFloat(integerLiteral: .cornerRadiusCell)
+            button.layer.borderWidth = CGFloat(integerLiteral: .borderWidthCell)
             button.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
             button.clipsToBounds = true
             button.tintColor = .systemGray
@@ -71,10 +71,10 @@ extension ResultsViewController: ViewProtocol {
             switch button {
             case closeViewButton:
                 button.frame = CGRect(x: view.frame.minX + CGFloat(integerLiteral: .universalConstraint),
-                                      y: view.frame.minY + CGFloat(integerLiteral: .heightNavigationButton) + CGFloat(integerLiteral: .universalConstraint),
-                                         width: CGFloat(integerLiteral: .widthNavigationButton),
-                                         height: CGFloat(integerLiteral: .heightNavigationButton))
-                button.setImage(UIImage(systemName: .imageMenu), for: [])
+                                      y: view.frame.minY + CGFloat( integerLiteral: .heightNavigationButton) + CGFloat( integerLiteral: .universalConstraint),
+                                      width: CGFloat( integerLiteral: .widthNavigationButton),
+                                      height: CGFloat( integerLiteral: .heightNavigationButton))
+                button.setImage(UIImage(systemName: .imageButtonMenu), for: [])
                 button.addTarget(self, action: #selector(self.closeView(_:)), for: .touchUpInside)
             default:
                 print("ups: Button")
@@ -100,15 +100,4 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-}
-
-extension Int {
-    static let widthNavigationButton = 40
-    static let heightNavigationButton = 40
-    static let heightCell = 60
-}
-extension String {
-    static let imageMenu = "line.horizontal.3.decrease"
-    static let identifireCellResults = "CellResults"
-    
 }
