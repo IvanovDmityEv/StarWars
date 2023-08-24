@@ -28,6 +28,7 @@ class ResultsTableViewCell: UITableViewCell {
         return imageStarship
     }()
 
+    
 //MARK: - lifecycle func
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -39,10 +40,10 @@ class ResultsTableViewCell: UITableViewCell {
             NSLayoutConstraint.activate([
                 
                 playerName.centerYAnchor.constraint(equalTo: centerYAnchor),
-                playerName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+                playerName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(integerLiteral: .universalConstraint)),
                 
                 result.centerYAnchor.constraint(equalTo: centerYAnchor),
-                result.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+                result.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat(integerLiteral: .universalConstraint)),
 
                 imageStarship.centerYAnchor.constraint(equalTo: centerYAnchor),
                 imageStarship.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -55,30 +56,18 @@ class ResultsTableViewCell: UITableViewCell {
             fatalError("init(coder:) has not been implemented")
         }
     
-    
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 //MARK: - flow funcs
-    func settingCellResultdTable() {
+    func settingCellResultsTable(indexPath: IndexPath) {
         self.backgroundColor = .clear
         self.layer.cornerRadius = CGFloat(integerLiteral: .cornerRadiusCell)
         self.layer.borderWidth = CGFloat(integerLiteral: .borderWidthCell)
-        self.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
+        self.layer.borderColor = UIColor.systemGray.cgColor
         self.clipsToBounds = true
         
-        //Заглушка!!!
-        playerName.text = "Valera"
-        result.text = "20"
-        imageStarship.image = UIImage(named: .imageXWing)
+        let savedResults = ResultsGame.getResults()
+        let sortedResults = savedResults.sorted { $0.gamePoints > $1.gamePoints }
+        playerName.text = sortedResults[indexPath.row].name
+        imageStarship.image = UIImage(named: sortedResults[indexPath.row].starship)
+        result.text = String(sortedResults[indexPath.row].gamePoints)
     }
 }

@@ -34,7 +34,10 @@ extension String {
     static let imageXWing = "xWing"
     static let imageRebellionShip = "rebellionShip"
     static let imageMilleniumFalcon = "milleniumFalcon"
+    
+    //imageBackground
     static let imageSpace = "space"
+    static let imageBackground = "background"
     
     static let empireStarship = "empireStarship"
     static let rebelStarship = "rebelStarship"
@@ -50,7 +53,6 @@ extension String {
     static let titleAlertError = "Name not specified"
     static let buttonOkAlertError = "OK"
     
-    
     //IdentifireCell
     static let identifireCellResults = "CellResults"
     static let identifireCellSettings = "identifireCellSettings"
@@ -61,8 +63,10 @@ extension String {
     
     //UserDefaults
     static let indexStarship = "indexStarship"
+    static let nameStarship = "nameStarship"
     static let namePlayer = "namePlayer"
     static let speedGame = "speedGame"
     
+    static let arrayResultKey = "arrayResult"
 }
 

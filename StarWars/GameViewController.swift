@@ -14,11 +14,23 @@ class GameViewController: UIViewController {
     let leftClickButton = UIButton(type: .system)
     let rightClickButton = UIButton(type: .system)
     let fireButton = UIButton(type: .system)
-    let imageRebelStarship = UIImageView()
-    var empireStarships: [UIImageView] = []
-    var rockets: [UIView] = []
     let closeViewButton = UIButton(type: .system)
     
+    var layerRebelStarship = CALayer()
+    var layerEmpireStarship: CALayer?
+    var layerBulletRebelStarship: CALayer?
+    var layerBulletEmpireStarship: CALayer?
+    
+    var layersEmpireStarships: [CALayer] = []
+    var layersBullestRebelStarship: [CALayer] = []
+    
+    var timer = Timer()
+    let gameScore = UILabel()
+    var gamePoints: Int = 0 {
+        didSet {
+            gameScore.text = String(gamePoints)
+        }
+    }
     var settings = GameSettings.shared
 
 //MARK: - lifecycle func
@@ -44,9 +56,6 @@ class GameViewController: UIViewController {
     }
     
     private func settingGameScore() {
-        let gameScore = UILabel()
-
-        gameScore.text = "SCORE" //передать данные
         gameScore.font = UIFont(name: .fontName, size: CGFloat(integerLiteral: .sizeFont))
 
         gameScore.textColor = .white
@@ -55,34 +64,29 @@ class GameViewController: UIViewController {
         
         gameScore.frame = CGRect(x: Int(view.frame.maxX)/2 - .widthGameScore/2,
                                  y: Int(view.frame.maxY) - .heightGameScore - .universalConstraint,
-                                  width: .widthGameScore,
-                                  height: .heightGameScore)
+                                 width: .widthGameScore,
+                                 height: .heightGameScore)
         view.addSubview(gameScore)
     }
     
     private func addStarships() {
-        guard let imageRebelStarship = self.createStarship(name: .rebelStarship) else { return }
-        let layerRebelStarship = imageRebelStarship.layer
+        guard let layerRebelStarship = createStarhip(name: .rebelStarship) else { return }
         view.layer.insertSublayer(layerRebelStarship, at: 1)
-
-        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] timer in
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
             guard let self = self else {
                 timer.invalidate()
                 return
-            }
-            
-            guard let imageEmpireStarship = self.createStarship(name: .empireStarship) else { return }
-
-            //!!!
-            self.empireStarships.append(imageEmpireStarship)
-            
-            let layerEmpireStarship = imageEmpireStarship.layer
-            self.view.layer.insertSublayer(layerEmpireStarship, at: 2)
-            self.moveEmpireStarship(imageEmpireStarship)
+                }
+            guard let layerEmpireStarship = self.createStarhip(name: .empireStarship) else { return }
+                self.view.layer.insertSublayer(layerEmpireStarship, at: 2)
+                self.layersEmpireStarships.append(layerEmpireStarship)
+                self.moveEmpireStarship(layerEmpireStarship)
+//                self.fire(for: .empireStarship)
         }
     }
-
-    private func createStarship(name: String) -> UIImageView? {
+    
+    private func createStarhip(name: String) -> CALayer? {
         let countCell: Int = .countCell
         let widthStarship = Int(view.frame.size.width) / countCell
         var coordinatesX: [CGFloat] = []
@@ -93,99 +97,116 @@ class GameViewController: UIViewController {
             startPositionX += CGFloat(widthStarship)
         }
         let randomX: Int = Int(coordinatesX.randomElement() ?? startPositionX)
-        
         let starships: [String] = [.imageEmpireShip, .imageTieAdvanced, .imageTieFighter, .imageCommandShuttle]
         
         switch name {
         case .empireStarship:
             guard let randomStarsip = starships.randomElement() else { return nil }
             let imageEmpireStarship = UIImageView()
-
-            let empireStarship = Starship(positionX: randomX,
-                                 positionY: Int(view.frame.minY) - widthStarship,
-                                          width: Int(view.frame.width) / .countCell,
-                                 height: Int(view.frame.width) / .countCell,
-                                 nameStarship: randomStarsip)
-            
-            imageEmpireStarship.frame = CGRect(x: empireStarship.positionX,
-                                         y: empireStarship.positionY,
-                                         width: empireStarship.width,
-                                         height: empireStarship.height)
-            imageEmpireStarship.image = UIImage(named: empireStarship.name)
-            return imageEmpireStarship
+            layerEmpireStarship = CALayer()
+            layerEmpireStarship = imageEmpireStarship.layer
+            layerEmpireStarship?.frame = CGRect(x: randomX,
+                                                y: Int(view.frame.minY),
+                                                width: Int(view.frame.width) / .countCell,
+                                                height: Int(view.frame.width) / .countCell)
+            imageEmpireStarship.image = UIImage(named: randomStarsip)
+            return layerEmpireStarship
             
         case .rebelStarship:
+            let imageRebelStarship = UIImageView()
+            layerRebelStarship = imageRebelStarship.layer
             let positionY = view.frame.maxY - leftClickButton.frame.height - CGFloat(integerLiteral: .universalConstraint) - CGFloat(widthStarship)
-            let rebelStarship = Starship(positionX: Int(view.frame.maxX/2) - widthStarship/2,
-                                         positionY: Int(positionY),
-                                 width: Int(view.frame.width) / .countCell,
-                                 height: Int(view.frame.width) / .countCell,
-                                 nameStarship: .imageXWing)
-//
-            imageRebelStarship.frame = CGRect(x: rebelStarship.positionX,
-                                         y: rebelStarship.positionY,
-                                         width: rebelStarship.width,
-                                         height: rebelStarship.height)
+            layerRebelStarship.frame = CGRect(x: Int(view.frame.maxX/2) - widthStarship/2,
+                                              y: Int(positionY),
+                                              width: Int(view.frame.width) / .countCell,
+                                              height: Int(view.frame.width) / .countCell)
             let namesRebelStarships: [String] = [.imageXWing, .imageMilleniumFalcon, .imageRebellionShip]
             let selectedRebelStarship = namesRebelStarships[settings.indexStarship ?? 0]
-            
             imageRebelStarship.image = UIImage(named: selectedRebelStarship)
-            
-            return imageRebelStarship
-            
+            return layerRebelStarship
             default:
                 print("ups: AddStarship")
         }
         return nil
     }
     
-    private func moveEmpireStarship(_ imageEmpireStarship: UIImageView) {
-        
-//        let animator = UIViewPropertyAnimator(duration: 3, curve: .linear){
-//            imageEmpireStarship.frame.origin.y += self.imageRebelStarship.frame.origin.y + self.imageRebelStarship.frame.height
-//        }
-//
-//
-//
-//        animator.addCompletion { position in
-//            if position == .end {
-//                print("jsdhfskdhf")
-//                if self.checkCollisionFrame(empireStarshipFrame: imageEmpireStarship.frame, objectFrame: self.imageRebelStarship.frame) {
-//                    self.imageRebelStarship.removeFromSuperview()
-//                    self.showAlert()
-//
-//                }
-//            }
-//            imageEmpireStarship.removeFromSuperview()
-//        }
-//
-//        animator.startAnimation()
-//
-//        let countIteration = Int((view.frame.maxY - leftClickButton.frame.height - CGFloat(integerLiteral: .universalConstraint))/imageEmpireStarship.frame.height)
-
-//        animator.fractionComplete = CGFloat(0.5)
-        
-        UIView.animate(withDuration: 3, delay: 0, options: .curveLinear) {
-            imageEmpireStarship.frame.origin.y += self.imageRebelStarship.frame.origin.y + self.imageRebelStarship.frame.height
-
-        } completion: {_ in
-
-            if self.checkCollisionFrame(empireStarshipFrame: imageEmpireStarship.frame, objectFrame: self.imageRebelStarship.frame) {
-                self.imageRebelStarship.removeFromSuperview()
-                self.showAlert()
+    private func moveEmpireStarship(_ layerEmpireStarship: CALayer) {
+        let empireStarshipAnimation = CABasicAnimation(keyPath: "position.y")
+        empireStarshipAnimation.fromValue = layerEmpireStarship.position.y
+        empireStarshipAnimation.toValue = view.bounds.height + layerEmpireStarship.frame.height*2
+        empireStarshipAnimation.duration = setSpeadgame()
+        empireStarshipAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
+        layerEmpireStarship.add(empireStarshipAnimation, forKey: "empireStarshipAnimation")
+    
+        let collisionDetection = CADisplayLink(target: self, selector: #selector(checkCollision))
+        collisionDetection.add(to: .main, forMode: .common)
+    }
+    
+    private func setSpeadgame() -> CFTimeInterval {
+        let speedGame = settings.speedGame
+        switch speedGame{
+        case 1:
+            return 5
+        case 2:
+            return 4
+        case 3:
+            return 3
+        case .none:
+            return 3
+        case .some(_):
+            return 3
+        }
+    }
+    
+    @objc func checkCollision() {
+        let stopMaxYFrame = CGRect(x: view.frame.minX, y: view.frame.maxY + layerRebelStarship.frame.height, width: view.frame.width, height: .zero)
+        let stopMinYFrame = CGRect(x: view.frame.minX, y: view.frame.minY - layerRebelStarship.frame.height, width: view.frame.width, height: .zero)
+        let rebelStarshipFrame = layerRebelStarship.presentation()?.frame ?? .zero
+        for i in 0..<layersEmpireStarships.count {
+            let starship = layersEmpireStarships[i].presentation()?.frame ?? .zero
+            if starship.intersects(rebelStarshipFrame) {
+                timer.invalidate()
+                layersEmpireStarships[i].removeAllAnimations()
+                layersEmpireStarships[i].removeFromSuperlayer()
+                layerRebelStarship.removeFromSuperlayer()
+                layersEmpireStarships.remove(at: i)
+                showAlert()
+                break
             }
-
-        imageEmpireStarship.removeFromSuperview()
-
-            //!!!
-            if let index = self.empireStarships.firstIndex(of: imageEmpireStarship) {
-                self.empireStarships.remove(at: index)
+            for j in 0..<layersBullestRebelStarship.count {
+                let bullet = layersBullestRebelStarship[j].presentation()?.frame ?? .zero
+                if bullet.intersects(starship) {
+                    layersEmpireStarships[i].removeAllAnimations()
+                    layersEmpireStarships[i].removeFromSuperlayer()
+                    layersBullestRebelStarship[j].removeAllAnimations()
+                    layersBullestRebelStarship[j].removeFromSuperlayer()
+                    layersBullestRebelStarship.remove(at: j)
+                    gamePoints += .points
+                    break
+                }
+                if bullet.intersects(stopMinYFrame) {
+                    layersBullestRebelStarship[j].removeAllAnimations()
+                    layersBullestRebelStarship[j].removeFromSuperlayer()
+                    layersBullestRebelStarship.remove(at: j)
+                    break
+                }
+            }
+            if starship.intersects(stopMaxYFrame) {
+                layersEmpireStarships[i].removeAllAnimations()
+                layersEmpireStarships[i].removeFromSuperlayer()
+                layersEmpireStarships.remove(at: i)
+                break
             }
         }
     }
     
-    private func checkCollisionFrame(empireStarshipFrame: CGRect, objectFrame: CGRect) -> Bool {
-        return empireStarshipFrame.intersects(objectFrame)
+    private func saveResult() {
+        if gamePoints > 0 {
+            let resultPlayer = ResultPlayer(name: settings.namePlayer ?? .imageXWing,
+                                      starship: settings.nameStarship ?? .imageXWing,
+                                      gamePoints: gamePoints)
+            ResultsGame.saveResult(resultPlayer)
+        }
     }
     
     private func showAlert() {
@@ -196,103 +217,114 @@ class GameViewController: UIViewController {
         
         let actionRestart = UIAlertAction(title: .buttonAlertRestart,
                                           style: .default) { [weak self] _ in
+            self?.saveResult()
+            self?.gamePoints = 0
             self?.addStarships()
-            self?.empireStarships = []
-            self?.rockets = []
-            
         }
         let actionGoMenu = UIAlertAction(title: .buttonAlertGoToMenu,
                                          style: .default) { [weak self] _ in
+            self?.saveResult()
             self?.dismiss(animated: true)
         }
-        
         alertController.addAction(actionRestart)
         alertController.addAction(actionGoMenu)
         self.present(alertController, animated: true, completion: nil)
     }
     
     private func moveRebelStarship(for button: UIButton) {
-        let distance = Int(imageRebelStarship.frame.size.width)
-        
-        UIView.animate(withDuration: 0.3) {
+        let distance = Int(layerRebelStarship.frame.size.width)
             switch button {
             case self.leftClickButton:
-                if self.imageRebelStarship.frame.origin.x - CGFloat(distance) >= self.view.frame.minX {
-                    self.imageRebelStarship.frame.origin.x -= CGFloat(distance)
-                } else {
-                    return
+                UIView.animate(withDuration: .withDurationRebelStarship) {
+                    if self.layerRebelStarship.frame.origin.x - CGFloat(distance) >= self.view.frame.minX {
+                        self.layerRebelStarship.frame.origin.x -= CGFloat(distance)
+                    } else {
+                        return
+                    }
                 }
             case self.rightClickButton:
-                if self.imageRebelStarship.frame.origin.x + CGFloat(distance) <= self.view.frame.maxX - CGFloat(distance) {
-                    self.imageRebelStarship.frame.origin.x += CGFloat(distance)
-                } else {
-                    return
+                UIView.animate(withDuration: .withDurationRebelStarship) {
+                    if self.layerRebelStarship.frame.origin.x + CGFloat(distance) <= self.view.frame.maxX - CGFloat(distance) {
+                        self.layerRebelStarship.frame.origin.x += CGFloat(distance)
+                    } else {
+                        return
+                    }
                 }
             default:
-                print("ups: rebelStarship")
+                print("ups: moveRebelStarship")
             }
-        }
     }
     
-    private func fire(imageStarship: UIImageView) {
-        let  rocket = UIView()
-        rocket.layer.cornerRadius = CGFloat(integerLiteral: .widthRocket)/2
-        rocket.backgroundColor = .systemRed
-
-        let layerRocket = rocket.layer
-        self.view.layer.insertSublayer(layerRocket, at: 2)
-        rockets.append(rocket)
-        switch imageStarship {
-        case imageRebelStarship:
-            rocket.frame = CGRect(x: CGFloat(Int(imageStarship.frame.origin.x + imageStarship.frame.width/2 - CGFloat(integerLiteral: .widthRocket)/2)),
-                                  y: CGFloat(Int(imageStarship.frame.origin.y)) - CGFloat(integerLiteral: .widthRocket),
-                                  width: CGFloat(integerLiteral: .widthRocket),
-                                  height: CGFloat(integerLiteral: .widthRocket))
-            
-            let countIteration = (Int(rocket.frame.origin.y) - Int(self.view.frame.origin.y))/Int(imageStarship.frame.height)
-            
-            UIView.animate(withDuration: 3, delay: 0, options: .curveLinear) {
-                
-                for _ in 0...countIteration {
-                    rocket.frame.origin.y -= imageStarship.frame.height
-                    self.checkCollision(rocket: rocket)
-                }
-                
-//                rocket.frame.origin.y = self.view.frame.origin.y
-//                rocket.center = CGPoint(x: rocket.center.x, y: -rocket.bounds.height / 2)
-        } completion: {_ in
-            
-            //!!!
-            if let index = self.rockets.firstIndex(of: rocket) {
-                self.rockets.remove(at: index)
-            }
-            rocket.removeFromSuperview()
-        }
-            //!!!
-//            checkCollision(rocket: rocket)
-            
+    private func fire(for starship: String) {
+        switch starship {
+        case .rebelStarship:
+            guard let bulletForRebelStarship = createBullet(for: layerRebelStarship) else { return }
+            layersBullestRebelStarship.append(bulletForRebelStarship)
+            muveBullet(bullet: bulletForRebelStarship, for: starship)
+        case .empireStarship: break
+//            guard let bulletForEmpireStarship = createBullet(for: layerEmpireStarship ?? CALayer()) else { return }
+//            muveBullet(bullet: bulletForEmpireStarship, for: starship)
         default:
             print("ups: fire")
         }
     }
     
-    //!!!
-    func checkCollision(rocket: UIView) {
-         for starship in empireStarships {
-             if rocket.frame.intersects(starship.frame) {
-                 rocket.removeFromSuperview()
-                 starship.removeFromSuperview()
-                 
-                 if let index = rockets.firstIndex(of: rocket) {
-                     rockets.remove(at: index)
-                 }
-                 if let index = empireStarships.firstIndex(of: starship) {
-                     empireStarships.remove(at: index)
-                 }
-             }
-         }
-     }
+    private func createBullet(for starship: CALayer) -> CALayer? {
+        let widthBullet: Int = .widthBullet
+        switch starship {
+        case layerRebelStarship:
+            layerBulletRebelStarship = CALayer()
+            layerBulletRebelStarship?.cornerRadius = CGFloat(integerLiteral: .widthBullet)/2
+            self.view.layer.insertSublayer(layerBulletRebelStarship ?? CALayer(), at: 3)
+            layerBulletRebelStarship?.backgroundColor = UIColor.systemYellow.cgColor
+            layerBulletRebelStarship?.frame = CGRect(x: Int(layerRebelStarship.frame.midX) - widthBullet/2,
+                                       y: Int(layerRebelStarship.frame.origin.y) - widthBullet/2,
+                                       width:  widthBullet,
+                                       height: widthBullet)
+            return layerBulletRebelStarship
+            
+        case layerEmpireStarship: break
+//            layerBulletEmpireStarship = CALayer()
+//            layerBulletEmpireStarship?.cornerRadius = CGFloat(integerLiteral: .widthBullet)/2
+//            self.view.layer.insertSublayer(layerBulletEmpireStarship ?? CALayer(), at: 3)
+//            layerBulletEmpireStarship?.backgroundColor = UIColor.systemRed.cgColor
+//            guard let layerEmpireStarship = layerEmpireStarship else { return nil}
+//            layerBulletEmpireStarship?.frame = CGRect(x: Int(layerEmpireStarship.frame.midX) - widthBullet/2,
+//                                                      y: Int(layerEmpireStarship.frame.origin.y + layerEmpireStarship.frame.height) + widthBullet/2,
+//                                                      width:  widthBullet,
+//                                                      height: widthBullet)
+//            return layerBulletEmpireStarship
+        default:
+            print("ups: createBullet")
+        }
+        return nil
+    }
     
+    private func muveBullet(bullet: CALayer, for starship: String) {
+        switch starship {
+        case .rebelStarship:
+            let bulletRebelStarshipAnimation = CABasicAnimation(keyPath: "position.y")
+            bulletRebelStarshipAnimation.fromValue = bullet.position.y
+            bulletRebelStarshipAnimation.toValue = view.frame.origin.y - 2*layerRebelStarship.frame.height
+            bulletRebelStarshipAnimation.duration = 2
+            bulletRebelStarshipAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
+            bulletRebelStarshipAnimation.isRemovedOnCompletion = true
+            bullet.add(bulletRebelStarshipAnimation, forKey: "bulletRebelStarshipAnimation")
+            
+        case .empireStarship:
+            let bulletEmpireStarshipAnimation = CABasicAnimation(keyPath: "position.y")
+            bulletEmpireStarshipAnimation.fromValue = bullet.position.y
+            bulletEmpireStarshipAnimation.toValue = view.frame.maxY + 2*layerRebelStarship.frame.height
+            bulletEmpireStarshipAnimation.duration = 2
+            bulletEmpireStarshipAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
+            bulletEmpireStarshipAnimation.isRemovedOnCompletion = true
+            bullet.add(bulletEmpireStarshipAnimation, forKey: "bulletEmpireStarshipAnimation")
+        default:
+            print("ups: muveBullet")
+        }
+        let collisionDetection = CADisplayLink(target: self, selector: #selector(checkCollision))
+        collisionDetection.add(to: .main, forMode: .common)
+    }
     
 //MARK: - IBActions
     @IBAction func goToLeft(_ leftClickButton: UIButton) {
@@ -302,12 +334,12 @@ class GameViewController: UIViewController {
         moveRebelStarship(for: rightClickButton)
     }
     @IBAction func closeView(_ closeViewButton: UIButton) {
-       dismiss(animated: true)
+        saveResult()
+        dismiss(animated: true)
     }
     @IBAction func fire(_ fireButton: UIButton) {
-        fire(imageStarship: imageRebelStarship)
+        fire(for: .rebelStarship)
     }
-    
 }
 
 //MARK: - extensions

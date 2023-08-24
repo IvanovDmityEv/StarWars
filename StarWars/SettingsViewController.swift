@@ -18,8 +18,9 @@ class SettingsViewController: UIViewController {
     var resultLabel = UILabel()
     var arrayStarships: [String] = []
     
-//    var settingsTuple: (Int?, String?, Int?)
     var indexSelectedStarship: Int?
+    var nameStarship: String?
+    
     var settings = GameSettings.shared
     
 //MARK: - lifecycle func
@@ -27,6 +28,13 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingSettingsView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        backgroundImage.frame = CGRect(x: view.frame.origin.x,
+                                  y: view.frame.origin.y,
+                                  width: view.bounds.size.width ,
+                                  height: view.bounds.size.height)
     }
     
 //MARK: - flow funcs
@@ -130,7 +138,6 @@ class SettingsViewController: UIViewController {
     
     @objc func stepperValueChanged() {
         updateResultLabel(value: stepper.value)
-//        settingsTuple.2 = Int(stepper.value)
     }
     
     private func updateResultLabel(value: Double) {
@@ -143,16 +150,12 @@ class SettingsViewController: UIViewController {
                                                 message: nil,
                                                 preferredStyle: .alert)
         alertController.view.tintColor = .black
-        
         let actionOk = UIAlertAction(title: .buttonOkAlertError,
                                          style: .default)
-        
         alertController.addAction(actionOk)
         self.present(alertController, animated: true, completion: nil)
     }
     
-
-
 //MARK: - IBActions
     @IBAction func closeView(_ closeViewButton: UIButton) {
        dismiss(animated: true)
@@ -160,15 +163,11 @@ class SettingsViewController: UIViewController {
     
     @IBAction func saveSettings(_ saveSettingsButton: UIButton) {
         view.endEditing(true)
-//        if settingsTuple.1 != nil, settingsTuple.1 != "" {
-//            settings.indexStarship = settingsTuple.0 ?? 0
-//            settings.namePlayer = settingsTuple.1
-//            settings.speedGame = settingsTuple.2 ?? 1
-//            dismiss(animated: true)
         if playerName.text != nil, playerName.text != "" {
             settings.indexStarship = indexSelectedStarship
+            settings.nameStarship = nameStarship
             settings.namePlayer = playerName.text
-            settings.speedGame = Int(stepper.value)
+            settings.speedGame = Int(stepper.value)            
             dismiss(animated: true)
         } else {
             showAlertError()
@@ -179,7 +178,7 @@ class SettingsViewController: UIViewController {
 //MARK: - extensions
 extension SettingsViewController: ViewProtocol {
     func settingBackgroundView() {
-        let image = UIImageView(image: UIImage(named: .imageSpace))
+        let image = UIImageView(image: UIImage(named: .imageBackground))
         backgroundImage = image.layer
         view.layer.insertSublayer(backgroundImage, at: 0)
     }
@@ -188,7 +187,7 @@ extension SettingsViewController: ViewProtocol {
         _ = buttons.map { button in
             button.layer.cornerRadius = CGFloat(integerLiteral: .cornerRadiusCell)
             button.layer.borderWidth = CGFloat(integerLiteral: .borderWidthCell)
-            button.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
+            button.layer.borderColor = UIColor.systemGray.cgColor
             button.clipsToBounds = true
             button.tintColor = .systemGray
             button.layer.cornerRadius = CGFloat(.heightNavigationButton/2)
@@ -234,6 +233,7 @@ extension SettingsViewController: UICollectionViewDelegate, UICollectionViewData
             cell.contentView.backgroundColor = UIColor.systemGray5.withAlphaComponent(CGFloat(.alpha))
             collectionView.selectItem(at: indexPathToSelect, animated: true, scrollPosition: .centeredHorizontally)
             indexSelectedStarship = indexPath.row
+            nameStarship = arrayStarships[indexPath.row]
         }
         return cell
     }
@@ -242,6 +242,7 @@ extension SettingsViewController: UICollectionViewDelegate, UICollectionViewData
         if let cell = collectionView.cellForItem(at: indexPath) {
             cell.contentView.backgroundColor = UIColor.systemGray5.withAlphaComponent(CGFloat(.alpha))
             indexSelectedStarship = indexPath.row
+            nameStarship = arrayStarships[indexPath.row]
         }
     }
     
@@ -253,12 +254,6 @@ extension SettingsViewController: UICollectionViewDelegate, UICollectionViewData
 }
 
 extension SettingsViewController: UITextFieldDelegate {
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        if let enteredText = textField.text {
-//            settingsTuple.1 = enteredText
-//        }
-//    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

@@ -23,7 +23,7 @@ extension Int {
     static let universalConstraint = 16
 
     //Rocket
-    static let widthRocket = 10
+    static let widthBullet = 10
     
     //GameScore
     static let widthGameScore = 100
@@ -45,9 +45,12 @@ extension Int {
     static let heightSettingsCollectionView = 160
     static let topAnchorConstantCollectionView = 120
     static let heightCellSettingsCollectionView = 140
+    
+    static let points = 10
 }
 
 extension Double {
     //Atributes
     static let alpha = 0.5
+    static let withDurationRebelStarship = 0.3
 }

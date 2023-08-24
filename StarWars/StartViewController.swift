@@ -15,8 +15,6 @@ class StartViewController: UIViewController {
     let resultsButton = UIButton(type: .system)
     let settingsButton = UIButton(type: .system)
     
-    
-    
 //MARK: - lifecycle func
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,11 +66,9 @@ extension StartViewController: ViewProtocol {
             button.backgroundColor = .black
             button.tintColor = .white
             button.layer.cornerRadius = CGFloat(integerLiteral: .heightMenuStartButton/2)
-            button.alpha = 0.5
+            button.alpha = CGFloat(.alpha)
             let layerButton = button.layer
-            
             view.layer.insertSublayer(layerButton, at: 1)
-//            view.addSubview(button)
             
             switch button {
             case startButton:

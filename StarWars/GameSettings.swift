@@ -20,6 +20,15 @@ struct GameSettings {
             userDefaults.set(newValue, forKey: .indexStarship)
         }
     }
+    
+    var nameStarship: String? {
+        get {
+            return userDefaults.string(forKey: .nameStarship)
+        }
+        set {
+            userDefaults.set(newValue, forKey: .nameStarship)
+        }
+    }
 
     var namePlayer: String? {
         get {

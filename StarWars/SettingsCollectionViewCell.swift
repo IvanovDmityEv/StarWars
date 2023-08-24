@@ -35,7 +35,7 @@ class SettingsCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = .clear
         self.layer.cornerRadius = CGFloat(integerLiteral: .cornerRadiusCell)
         self.layer.borderWidth = CGFloat(integerLiteral: .borderWidthCell)
-        self.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
+        self.layer.borderColor = UIColor.systemGray.cgColor
         self.clipsToBounds = true
         
         imageStarship.image = UIImage(named: imageName)

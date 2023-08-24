@@ -14,13 +14,17 @@ class ResultsViewController: UIViewController {
     let closeViewButton = UIButton(type: .system)
     var tableViewResults = UITableView()
     
-    
 //MARK: - lifecycle func
     override func viewDidLoad() {
         super.viewDidLoad()
         settingResultView()
     }
-
+    override func viewDidLayoutSubviews() {
+        backgroundImage.frame = CGRect(x: view.frame.origin.x,
+                                  y: view.frame.origin.y,
+                                  width: view.bounds.size.width ,
+                                  height: view.bounds.size.height)
+    }
     
 //MARK: - flow funcs
     private func settingResultView() {
@@ -33,15 +37,13 @@ class ResultsViewController: UIViewController {
         tableViewResults = UITableView(frame: CGRect(x:view.frame.origin.x + CGFloat( integerLiteral: .universalConstraint),
                                                      y: view.frame.origin.y + closeViewButton.frame.maxY + CGFloat( integerLiteral: .universalConstraint),
                                                      width: view.frame.width - 2*CGFloat( integerLiteral: .universalConstraint),
-                                                     height: view.frame.height - CGFloat( integerLiteral: .universalConstraint)))
+                                                     height: view.frame.height - CGFloat( integerLiteral: .universalConstraint) - closeViewButton.frame.maxY))
         view.layer.insertSublayer(tableViewResults.layer, at: 1)
         tableViewResults.backgroundColor = .clear
         tableViewResults.delegate = self
         tableViewResults.dataSource = self
         tableViewResults.register(ResultsTableViewCell.self, forCellReuseIdentifier: .identifireCellResults)
-        
     }
-    
     
 //MARK: - IBActions
     @IBAction func closeView(_ closeViewButton: UIButton) {
@@ -51,7 +53,7 @@ class ResultsViewController: UIViewController {
 //MARK: - extensions
 extension ResultsViewController: ViewProtocol {
     func settingBackgroundView() {
-        let image = UIImageView(image: UIImage(named: .imageSpace))
+        let image = UIImageView(image: UIImage(named: .imageBackground))
         backgroundImage = image.layer
         view.layer.insertSublayer(backgroundImage, at: 0)
     }
@@ -60,7 +62,7 @@ extension ResultsViewController: ViewProtocol {
         _ = buttons.map { button in
             button.layer.cornerRadius = CGFloat(integerLiteral: .cornerRadiusCell)
             button.layer.borderWidth = CGFloat(integerLiteral: .borderWidthCell)
-            button.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
+            button.layer.borderColor = UIColor.systemGray.cgColor
             button.clipsToBounds = true
             button.tintColor = .systemGray
             button.layer.cornerRadius = CGFloat(.heightNavigationButton/2)
@@ -85,12 +87,14 @@ extension ResultsViewController: ViewProtocol {
 
 extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        let results = ResultsGame.getResults()
+        return results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: .identifireCellResults, for: indexPath) as? ResultsTableViewCell
-        cell?.settingCellResultdTable()
+        cell?.settingCellResultsTable(indexPath: indexPath)
+        
         return cell ?? UITableViewCell()
     }
     

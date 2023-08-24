@@ -15,9 +15,22 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="starWars" translatesAutoresizingMaskIntoConstraints="NO" id="At2-e3-CnW">
+                                <rect key="frame" x="121.66666666666669" y="363.66666666666669" width="150" height="150.00000000000006"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="XJz-U6-VRA"/>
+                                    <constraint firstAttribute="height" constant="150" id="frE-M7-fpg"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemYellowColor"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="At2-e3-CnW" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ViL-Fh-h6h"/>
+                            <constraint firstItem="At2-e3-CnW" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="n7g-Q6-9FR"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -26,8 +39,9 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <image name="starWars" width="150" height="150"/>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

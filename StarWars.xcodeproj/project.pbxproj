@@ -16,12 +16,12 @@
 		2C4F7AD12A93514400222A02 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F7AD02A93514400222A02 /* GameSettings.swift */; };
 		2C4F7AD32A93830F00222A02 /* ExtentionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F7AD22A93830F00222A02 /* ExtentionString.swift */; };
 		2C4F7AD52A9387DF00222A02 /* ExtentionInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F7AD42A9387DF00222A02 /* ExtentionInt.swift */; };
+		2C4F7AD92A9744A700222A02 /* ResultsGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F7AD82A9744A700222A02 /* ResultsGame.swift */; };
 		2CC1940F2A73E78700E30D8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC1940E2A73E78700E30D8D /* AppDelegate.swift */; };
 		2CC194112A73E78700E30D8D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC194102A73E78700E30D8D /* SceneDelegate.swift */; };
 		2CC194132A73E78700E30D8D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC194122A73E78700E30D8D /* GameViewController.swift */; };
 		2CC194182A73E78800E30D8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CC194172A73E78800E30D8D /* Assets.xcassets */; };
 		2CC1941B2A73E78800E30D8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CC194192A73E78800E30D8D /* LaunchScreen.storyboard */; };
-		2CC194232A73F21F00E30D8D /* Starship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC194222A73F21E00E30D8D /* Starship.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +34,7 @@
 		2C4F7AD02A93514400222A02 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		2C4F7AD22A93830F00222A02 /* ExtentionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionString.swift; sourceTree = "<group>"; };
 		2C4F7AD42A9387DF00222A02 /* ExtentionInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionInt.swift; sourceTree = "<group>"; };
+		2C4F7AD82A9744A700222A02 /* ResultsGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsGame.swift; sourceTree = "<group>"; };
 		2CC1940B2A73E78700E30D8D /* StarWars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarWars.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC1940E2A73E78700E30D8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CC194102A73E78700E30D8D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,7 +42,6 @@
 		2CC194172A73E78800E30D8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CC1941A2A73E78800E30D8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2CC1941C2A73E78800E30D8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2CC194222A73F21E00E30D8D /* Starship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starship.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,11 +80,11 @@
 				2CC194122A73E78700E30D8D /* GameViewController.swift */,
 				2C31149D2A7A55D500D94CA1 /* ResultsViewController.swift */,
 				2C4F7AA52A8D026000222A02 /* ResultsTableViewCell.swift */,
+				2C4F7AD82A9744A700222A02 /* ResultsGame.swift */,
 				2C31149F2A7A754E00D94CA1 /* SettingsViewController.swift */,
 				2C4F7AAE2A8E5CEF00222A02 /* SettingsCollectionViewCell.swift */,
 				2C4F7AD02A93514400222A02 /* GameSettings.swift */,
 				2C3114992A7A374C00D94CA1 /* ViewProtocol.swift */,
-				2CC194222A73F21E00E30D8D /* Starship.swift */,
 				2C4F7AD22A93830F00222A02 /* ExtentionString.swift */,
 				2C4F7AD42A9387DF00222A02 /* ExtentionInt.swift */,
 				2CC194172A73E78800E30D8D /* Assets.xcassets */,
@@ -173,8 +173,8 @@
 				2C4F7AD52A9387DF00222A02 /* ExtentionInt.swift in Sources */,
 				2C3114A02A7A754E00D94CA1 /* SettingsViewController.swift in Sources */,
 				2C31149E2A7A55D500D94CA1 /* ResultsViewController.swift in Sources */,
+				2C4F7AD92A9744A700222A02 /* ResultsGame.swift in Sources */,
 				2CC194112A73E78700E30D8D /* SceneDelegate.swift in Sources */,
-				2CC194232A73F21F00E30D8D /* Starship.swift in Sources */,
 				2C4F7AA62A8D026000222A02 /* ResultsTableViewCell.swift in Sources */,
 				2C31149C2A7A380900D94CA1 /* StartViewController.swift in Sources */,
 			);
