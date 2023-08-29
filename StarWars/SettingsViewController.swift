@@ -95,7 +95,7 @@ class SettingsViewController: UIViewController {
         playerName.placeholder = .placeholderTextFieldName
         playerName.autocorrectionType = .no
         playerName.layer.borderWidth =  CGFloat(integerLiteral: .borderWidthCell)
-        playerName.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
+        playerName.layer.borderColor = UIColor.systemGray.cgColor
         playerName.clipsToBounds = true
         playerName.delegate = self
         if settings.namePlayer != nil, settings.namePlayer != "" {

@@ -68,5 +68,11 @@ extension String {
     static let speedGame = "speedGame"
     
     static let arrayResultKey = "arrayResult"
+    
+    //Atributes
+    static let keyPathAnimation = "position.y"
+    static let keyAnimationEmpireStarship = "empireStarshipAnimation"
+    static let keyAnimationBulletRebelStarship = "bulletRebelStarshipAnimation"
+    static let keyAnimationBulletEmpireStarship = "bulletEmpireStarshipAnimation"
 }
 

@@ -45,6 +45,12 @@ class GameViewController: UIViewController {
                                   width: view.bounds.size.width ,
                                   height: view.bounds.size.height)
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        layersEmpireStarships = []
+        layersBullestRebelStarship = []
+        timer.invalidate()
+    }
 
 //MARK: - flow funcs
     
@@ -88,7 +94,8 @@ class GameViewController: UIViewController {
     
     private func createStarhip(name: String) -> CALayer? {
         let countCell: Int = .countCell
-        let widthStarship = Int(view.frame.size.width) / countCell
+//        let widthStarship = Int(view.frame.size.width) / countCell
+        let widthStarship: Int = .widthStarship
         var coordinatesX: [CGFloat] = []
         var startPositionX = (self.view.frame.width - CGFloat(widthStarship*countCell))/2
         
@@ -107,8 +114,8 @@ class GameViewController: UIViewController {
             layerEmpireStarship = imageEmpireStarship.layer
             layerEmpireStarship?.frame = CGRect(x: randomX,
                                                 y: Int(view.frame.minY),
-                                                width: Int(view.frame.width) / .countCell,
-                                                height: Int(view.frame.width) / .countCell)
+                                                width: widthStarship,
+                                                height: widthStarship)
             imageEmpireStarship.image = UIImage(named: randomStarsip)
             return layerEmpireStarship
             
@@ -118,8 +125,8 @@ class GameViewController: UIViewController {
             let positionY = view.frame.maxY - leftClickButton.frame.height - CGFloat(integerLiteral: .universalConstraint) - CGFloat(widthStarship)
             layerRebelStarship.frame = CGRect(x: Int(view.frame.maxX/2) - widthStarship/2,
                                               y: Int(positionY),
-                                              width: Int(view.frame.width) / .countCell,
-                                              height: Int(view.frame.width) / .countCell)
+                                              width: widthStarship,
+                                              height: widthStarship)
             let namesRebelStarships: [String] = [.imageXWing, .imageMilleniumFalcon, .imageRebellionShip]
             let selectedRebelStarship = namesRebelStarships[settings.indexStarship ?? 0]
             imageRebelStarship.image = UIImage(named: selectedRebelStarship)
@@ -131,12 +138,12 @@ class GameViewController: UIViewController {
     }
     
     private func moveEmpireStarship(_ layerEmpireStarship: CALayer) {
-        let empireStarshipAnimation = CABasicAnimation(keyPath: "position.y")
+        let empireStarshipAnimation = CABasicAnimation(keyPath: .keyPathAnimation)
         empireStarshipAnimation.fromValue = layerEmpireStarship.position.y
         empireStarshipAnimation.toValue = view.bounds.height + layerEmpireStarship.frame.height*2
         empireStarshipAnimation.duration = setSpeadgame()
         empireStarshipAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
-        layerEmpireStarship.add(empireStarshipAnimation, forKey: "empireStarshipAnimation")
+        layerEmpireStarship.add(empireStarshipAnimation, forKey: .keyAnimationEmpireStarship)
     
         let collisionDetection = CADisplayLink(target: self, selector: #selector(checkCollision))
         collisionDetection.add(to: .main, forMode: .common)
@@ -303,22 +310,22 @@ class GameViewController: UIViewController {
     private func muveBullet(bullet: CALayer, for starship: String) {
         switch starship {
         case .rebelStarship:
-            let bulletRebelStarshipAnimation = CABasicAnimation(keyPath: "position.y")
+            let bulletRebelStarshipAnimation = CABasicAnimation(keyPath: .keyPathAnimation)
             bulletRebelStarshipAnimation.fromValue = bullet.position.y
             bulletRebelStarshipAnimation.toValue = view.frame.origin.y - 2*layerRebelStarship.frame.height
             bulletRebelStarshipAnimation.duration = 2
             bulletRebelStarshipAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
             bulletRebelStarshipAnimation.isRemovedOnCompletion = true
-            bullet.add(bulletRebelStarshipAnimation, forKey: "bulletRebelStarshipAnimation")
+            bullet.add(bulletRebelStarshipAnimation, forKey: .keyAnimationBulletRebelStarship)
             
         case .empireStarship:
-            let bulletEmpireStarshipAnimation = CABasicAnimation(keyPath: "position.y")
+            let bulletEmpireStarshipAnimation = CABasicAnimation(keyPath: .keyPathAnimation)
             bulletEmpireStarshipAnimation.fromValue = bullet.position.y
             bulletEmpireStarshipAnimation.toValue = view.frame.maxY + 2*layerRebelStarship.frame.height
             bulletEmpireStarshipAnimation.duration = 2
             bulletEmpireStarshipAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
             bulletEmpireStarshipAnimation.isRemovedOnCompletion = true
-            bullet.add(bulletEmpireStarshipAnimation, forKey: "bulletEmpireStarshipAnimation")
+            bullet.add(bulletEmpireStarshipAnimation, forKey: .keyAnimationBulletEmpireStarship)
         default:
             print("ups: muveBullet")
         }
@@ -335,6 +342,9 @@ class GameViewController: UIViewController {
     }
     @IBAction func closeView(_ closeViewButton: UIButton) {
         saveResult()
+        timer.invalidate()
+        layersEmpireStarships = []
+        layersBullestRebelStarship = []
         dismiss(animated: true)
     }
     @IBAction func fire(_ fireButton: UIButton) {

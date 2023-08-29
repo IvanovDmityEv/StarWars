@@ -8,6 +8,7 @@
 import Foundation
 
 extension Int {
+    static let widthStarship = 74
     //Buttons
     static let widthMenuStartButton = 300
     static let heightMenuStartButton = 60
